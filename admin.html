@@ -87,6 +87,7 @@
   .badges { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
   .pill.live { background: var(--green); color: var(--white); border-color: var(--green); }
   .pill.draft { color: var(--muted); }
+  .pill.stale { background: #B7791F; color: var(--white); border-color: #B7791F; }
 
   .editor { background: var(--white); border: 1px solid var(--navy); padding: 26px; margin-bottom: 22px; }
   .editor h3 { font-size: 1.5rem; }
@@ -199,7 +200,7 @@
           </div>
         </div>
         <div class="span4"><label for="d-verdict">Your one-line verdict</label><input id="d-verdict" placeholder="e.g. Priced below comparable boats, with low engine hours."></div>
-        <div class="span4"><label for="d-take">Why I picked this boat</label><textarea id="d-take" placeholder="Why she stands out.&#10;&#10;What I'd check at survey and sea trial.&#10;&#10;Who she's right for."></textarea><p class="hint">Leave a blank line between paragraphs.</p></div>
+        <div class="span4"><label for="d-take">Why I picked this boat</label><textarea id="d-take" placeholder="Why she stands out.&#10;&#10;What I'd check at survey and sea trial.&#10;&#10;Who she's right for."></textarea><p class="hint">Leave a blank line between paragraphs. Saving a deal also marks it checked today.</p></div>
         <div><label for="d-tag">Label</label><input id="d-tag" placeholder="New find, Price drop..." list="tag-options"></div>
         <div><label for="d-status">Status</label><select id="d-status"><option value="active">Active</option><option value="under_contract">Under contract</option><option value="sold">Sold</option></select></div>
         <div class="span2"><label class="check"><input type="checkbox" id="d-published"> Show on the website</label></div>
@@ -325,6 +326,12 @@
 
   /* ---------- Deals ---------- */
   var DEALS = [], editingId = null;
+  function daysSince(t) { return t ? Math.floor((Date.now() - new Date(t).getTime()) / 86400000) : 999; }
+  function shortDate(t) { return t ? new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : ""; }
+  function dealLink(d) {
+    var words = [d.year, d.builder, d.model].filter(Boolean).join(" ").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    return "https://seayachts.net/#deal-" + (words ? words + "-" : "") + String(d.id).slice(0, 6);
+  }
   var STATUS = { active: "Active", under_contract: "Under contract", sold: "Sold" };
 
   async function loadDeals() {
@@ -344,8 +351,12 @@
         '<div class="thumb" style="' + (d.photo_url ? "background-image:url('" + esc(d.photo_url) + "')" : "") + '"></div>' +
         '<div><h3>' + esc(title) + '</h3><div class="meta">' + esc(meta) + '</div>' +
           '<div class="badges"><span class="pill ' + (d.published ? "live" : "draft") + '">' + (d.published ? "On website" : "Hidden") + '</span>' +
-          '<span class="pill">' + STATUS[d.status] + '</span>' + (d.tag ? '<span class="pill">' + esc(d.tag) + '</span>' : '') + '</div></div>' +
+          '<span class="pill">' + STATUS[d.status] + '</span>' + (d.tag ? '<span class="pill">' + esc(d.tag) + '</span>' : '') +
+          (d.status !== "sold" ? (daysSince(d.checked_at) >= 14 ? '<span class="pill stale">Needs re-check (' + daysSince(d.checked_at) + ' days)</span>' : '<span class="pill">Checked ' + shortDate(d.checked_at) + '</span>') : '') +
+          '</div></div>' +
         '<div class="actions">' +
+          '<button class="btn small light" data-checked>Mark checked</button>' +
+          '<button class="btn small light" data-copylink>' + (d.published ? "Copy link" : "Copy link (hidden)") + '</button>' +
           '<button class="btn small light" data-publish>' + (d.published ? "Hide" : "Show on site") + '</button>' +
           '<button class="btn small" data-edit>Edit</button>' +
           '<button class="btn small danger" data-delete>Delete</button>' +
@@ -438,6 +449,7 @@
       else row[k] = v === "" ? null : v;
     });
     row.published = $("d-published").checked;
+    row.checked_at = new Date().toISOString();   /* saving a deal counts as checking it */
     var oldPath = storagePath(photoUrl);
     if (photoFile) {
       $("deal-msg").textContent = "Uploading photo...";
@@ -469,6 +481,17 @@
     var card = e.target.closest(".card"); if (!card) return;
     var id = card.dataset.id, i = DEALS.findIndex(function (d) { return d.id === id; }), d = DEALS[i], r;
     if (e.target.closest("[data-edit]")) return openEditor(d);
+    if (e.target.closest("[data-checked]")) {
+      r = await sb.from("deals").update({ checked_at: new Date().toISOString() }).eq("id", id);
+      if (r.error) return alert("Could not update. Try again.");
+      return loadDeals();
+    }
+    if (e.target.closest("[data-copylink]")) {
+      var link = dealLink(d), b = e.target.closest("[data-copylink]");
+      try { await navigator.clipboard.writeText(link); b.textContent = "Link copied"; }
+      catch (err) { window.prompt("Copy this link:", link); }
+      return;
+    }
     if (e.target.closest("[data-publish]")) {
       r = await sb.from("deals").update({ published: !d.published }).eq("id", id);
       if (r.error) return alert("Could not update. Try again.");
