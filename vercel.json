@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/deals/:slug", "destination": "/api/deal?slug=:slug" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" }
+  ]
+}
