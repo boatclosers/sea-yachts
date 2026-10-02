@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sea Yachts | Yacht Buyer Representation, Palm Beach</title>
+<meta name="description" content="Yacht buyer representation in Palm Beach, Florida, led by a licensed captain since 1998 and licensed yacht broker since 2008. Yachts from $150K and up for private clients worldwide, with export specialists.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Albert+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0E2235;      /* ensign navy */
+    --navy-2: #0E2235;
+    --paper: #FBFBF9;     /* crisp chart paper */
+    --white: #FFFFFF;
+    --glass: #E9EFEE;     /* sea glass */
+    --ink: #0E2235;
+    --muted: #5C6A73;
+    --rule: rgba(14,34,53,0.16);
+    --mist: rgba(251,251,249,0.74);
+    --magenta: #8A4B2A;   /* varnished teak accent */
+    --chart-noaa: url("images/inlet-chart.jpg"); /* NOAA chart of Palm Beach Inlet (public domain) */
+    --chart-light: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22700%22 viewBox=%220 0 900 700%22%3E%3Crect width=%22900%22 height=%22700%22 fill=%22%23DDE8EC%22/%3E%3Cpath d=%22M0 0 H210 C190 140 240 260 205 390 S150 600 190 700 H0Z%22 fill=%22%23EFE6CF%22/%3E%3Cg fill=%22none%22 stroke=%22%238DAFC0%22 stroke-width=%221.1%22%3E%3Cpath d=%22M250 0 C232 140 282 262 246 392 S200 600 235 700%22/%3E%3Cpath d=%22M330 0 C310 150 365 270 325 400 S290 600 318 700%22/%3E%3Cpath d=%22M450 0 C425 160 485 280 445 410 S410 600 438 700%22 stroke-dasharray=%227 5%22/%3E%3Cpath d=%22M620 0 C595 170 655 290 612 420 S580 600 605 700%22 stroke-dasharray=%222 4%22/%3E%3C/g%3E%3Cg font-family=%22Georgia,serif%22 font-style=%22italic%22 font-size=%2214%22 fill=%22%235C7E8F%22%3E%3Ctext x=%22262%22 y=%2290%22%3E6%3C/text%3E%3Ctext x=%22280%22 y=%22200%22%3E8%3C/text%3E%3Ctext x=%22270%22 y=%22330%22%3E9%3C/text%3E%3Ctext x=%22360%22 y=%2270%22%3E14%3C/text%3E%3Ctext x=%22380%22 y=%22250%22%3E17%3C/text%3E%3Ctext x=%22355%22 y=%22470%22%3E16%3C/text%3E%3Ctext x=%22500%22 y=%22120%22%3E28%3C/text%3E%3Ctext x=%22520%22 y=%22320%22%3E33%3C/text%3E%3Ctext x=%22490%22 y=%22540%22%3E31%3C/text%3E%3Ctext x=%22690%22 y=%22100%22%3E52%3C/text%3E%3Ctext x=%22720%22 y=%22280%22%3E61%3C/text%3E%3Ctext x=%22680%22 y=%22460%22%3E58%3C/text%3E%3Ctext x=%22760%22 y=%22620%22%3E64%3C/text%3E%3C/g%3E%3Cg transform=%22translate(760 180)%22 fill=%22none%22 stroke=%22%23A3326B%22 stroke-width=%221%22%3E%3Ccircle r=%2270%22/%3E%3Ccircle r=%2256%22/%3E%3Cpath d=%22M0 -70 V70 M-70 0 H70%22/%3E%3Cpath d=%22M0 -70 L7 0 L0 70 L-7 0Z%22 fill=%22%23A3326B%22 fill-opacity=%220.25%22/%3E%3C/g%3E%3C/svg%3E");
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: "Albert Sans", "Helvetica Neue", Arial, sans-serif;
+    --chart: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22900%22 height=%22700%22 viewBox=%220 0 900 700%22%3E%3Crect width=%22900%22 height=%22700%22 fill=%22%230A1A2A%22/%3E%3Cg fill=%22none%22 stroke=%22%232C4A63%22 stroke-width=%221.1%22%3E%3Cpath d=%22M120 0 C100 140 150 262 114 392 S70 600 105 700%22/%3E%3Cpath d=%22M250 0 C232 140 282 262 246 392 S200 600 235 700%22/%3E%3Cpath d=%22M400 0 C380 150 435 270 395 400 S360 600 388 700%22 stroke-dasharray=%227 5%22/%3E%3Cpath d=%22M600 0 C575 160 635 280 595 410 S560 600 588 700%22 stroke-dasharray=%222 4%22/%3E%3Cpath d=%22M780 0 C755 170 815 290 772 420 S740 600 765 700%22/%3E%3C/g%3E%3Cg font-family=%22Georgia,serif%22 font-style=%22italic%22 font-size=%2214%22 fill=%22%233E6079%22%3E%3Ctext x=%22160%22 y=%2290%22%3E8%3C/text%3E%3Ctext x=%22175%22 y=%22300%22%3E11%3C/text%3E%3Ctext x=%22300%22 y=%22160%22%3E19%3C/text%3E%3Ctext x=%22320%22 y=%22420%22%3E22%3C/text%3E%3Ctext x=%22470%22 y=%2280%22%3E36%3C/text%3E%3Ctext x=%22500%22 y=%22330%22%3E41%3C/text%3E%3Ctext x=%22660%22 y=%22200%22%3E58%3C/text%3E%3Ctext x=%22690%22 y=%22520%22%3E63%3C/text%3E%3Ctext x=%22830%22 y=%22380%22%3E70%3C/text%3E%3C/g%3E%3C/svg%3E");
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--magenta); outline-offset: 3px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(22px, 4vw, 48px); }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; margin: 0; letter-spacing: -0.012em; }
+  h2 { font-size: clamp(2.2rem, 4.4vw, 3.6rem); line-height: 1.08; }
+  h3 { font-size: 1.45rem; line-height: 1.2; }
+  p { margin: 0 0 1em; max-width: 60ch; }
+  .lead { font-size: 1.2rem; line-height: 1.6; }
+  .muted { color: var(--muted); }
+  section { padding: clamp(80px, 10vw, 128px) 0; }
+
+  .btn { display: inline-block; font: 500 1rem var(--sans); padding: 16px 30px; border: 1px solid transparent; cursor: pointer; transition: background 0.2s, color 0.2s; }
+  .btn-light { background: var(--paper); color: var(--navy); }
+  .btn-light:hover { background: var(--white); }
+  .btn-navy { background: var(--navy); color: var(--paper); }
+  .btn-navy:hover { background: var(--magenta); }
+  .textlink { font-weight: 500; border-bottom: 1px solid var(--magenta); padding-bottom: 3px; }
+  .textlink:hover { color: var(--magenta); }
+
+  /* Header */
+  header.site { position: absolute; top: 0; left: 0; right: 0; z-index: 10; color: var(--ink); padding-top: env(safe-area-inset-top, 0px); }
+  .nav { display: flex; justify-content: space-between; align-items: center; height: 92px; gap: 24px; }
+  .wordmark { font-family: var(--serif); font-size: 1.6rem; }
+  .nav ul { display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; align-items: center; }
+  .nav a:hover { color: var(--magenta); }
+  .nav .call { background: var(--navy); color: var(--paper); padding: 11px 20px; }
+  .nav .call:hover { background: var(--magenta); color: var(--paper); }
+
+  /* Hero: crisp paper, with a framed NOAA chart */
+  .hero { background: var(--paper); color: var(--ink); padding: 0; }
+  .hero-grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(36px, 5vw, 80px); align-items: stretch; min-height: 100vh; min-height: 100svh; padding-top: 112px; padding-bottom: 48px; }
+  .hero-body { display: flex; flex-direction: column; justify-content: center; }
+  .hero h1 { font-size: clamp(2.7rem, 5.5vw, 5.4rem); line-height: 0.98; max-width: none; animation: rise 1.3s cubic-bezier(.2,.6,.2,1) both; }
+  .hero .lead { color: var(--muted); max-width: 46ch; margin: 30px 0 34px; animation: rise 1.3s cubic-bezier(.2,.6,.2,1) 0.2s both; }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; animation: rise 1.3s cubic-bezier(.2,.6,.2,1) 0.35s both; }
+  .record { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 0; animation: rise 1.3s cubic-bezier(.2,.6,.2,1) 0.5s both; }
+  .record div { padding: 22px 0 6px; }
+  .record div + div { padding-left: clamp(16px, 2.6vw, 34px); border-left: 1px solid var(--rule); }
+  .record b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(2.1rem, 4vw, 3.4rem); line-height: 1; }
+  .record span { color: var(--muted); font-size: 0.96rem; }
+  .chart-panel { position: relative; margin: 0; border: 1px solid var(--ink); padding: 8px; background: var(--white); animation: rise 1.5s cubic-bezier(.2,.6,.2,1) 0.3s both; }
+  .chart-panel .map { position: relative; height: 100%; min-height: 420px; border: 1px solid var(--rule); background: var(--chart-noaa) 30% 40% / cover no-repeat, var(--chart-light) left center / cover; }
+  .chart-panel .map::before, .chart-panel .map::after { content: ""; position: absolute; left: 0; right: 0; height: 6px; background: repeating-linear-gradient(90deg, var(--ink) 0 40px, var(--white) 40px 80px); border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .chart-panel .map::before { top: 0; }
+  .chart-panel .map::after { bottom: 0; }
+  .chart-panel figcaption { position: absolute; left: 26px; bottom: 26px; background: var(--white); border: 1px solid var(--ink); padding: 12px 16px; font-size: 0.86rem; line-height: 1.45; }
+  .chart-panel figcaption b { display: block; font-family: var(--serif); font-weight: 500; font-size: 1.15rem; }
+  .chart-panel figcaption span { color: var(--muted); }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero h1, .hero .lead, .hero .actions, .record, .chart-panel { animation: none; } }
+
+  /* Teak-and-holly inlay: a fine line of yacht joinery, used sparingly */
+  .inlay {
+    height: 13px;
+    background:
+      linear-gradient(180deg, rgba(255,226,180,0.14), rgba(255,226,180,0) 40%, rgba(0,0,0,0.12)) 0 0 / 100% 5.5px no-repeat,
+      linear-gradient(180deg, rgba(255,226,180,0.14), rgba(255,226,180,0) 40%, rgba(0,0,0,0.12)) 0 7.5px / 100% 5.5px no-repeat,
+      linear-gradient(180deg, transparent 5.5px, #F3EBD8 5.5px, #E6D9BC 7.5px, transparent 7.5px),
+      linear-gradient(90deg, #86502A, #7A4521 35%, #8C552C 62%, #7D4823 85%, #86502A);
+    box-shadow: inset 0 1px 0 rgba(60,30,12,0.55), inset 0 -1px 0 rgba(60,30,12,0.55);
+  }
+  /* Qualifications */
+  .qual-head { display: grid; grid-template-columns: 7fr 4fr; gap: clamp(36px, 6vw, 90px); align-items: center; margin-bottom: clamp(56px, 7vw, 88px); }
+  .portrait { margin: 0; border: 1px solid var(--ink); padding: 8px; background: var(--white); max-width: 380px; justify-self: end; width: 100%; }
+  .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 900 / 1108; object-fit: cover; filter: saturate(0.85); }
+  .portrait figcaption { padding: 14px 8px 6px; font-size: 0.92rem; color: var(--muted); }
+  .portrait figcaption b { display: block; font-family: var(--serif); font-weight: 500; font-size: 1.15rem; color: var(--ink); }
+  .trades { font-family: var(--serif); font-size: clamp(1.5rem, 2.8vw, 2.3rem); line-height: 1.25; max-width: none; margin: 0 0 clamp(40px, 5vw, 64px); padding: 26px 0 0; position: relative; }
+  .trades::before { content: ""; position: absolute; top: 0; left: 0; width: 120px; height: 9px; background: linear-gradient(180deg, transparent 3.5px, #F3EBD8 3.5px, #E6D9BC 5.5px, transparent 5.5px), linear-gradient(90deg, #86502A, #7A4521 50%, #8C552C); box-shadow: inset 0 1px 0 rgba(60,30,12,0.55), inset 0 -1px 0 rgba(60,30,12,0.55); }
+  .trades span { display: block; font-family: var(--sans); font-size: 1.05rem; color: var(--muted); margin-top: 8px; }
+  .expertise { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 clamp(36px, 6vw, 90px); border-top: 1px solid var(--ink); }
+  .expertise div { padding: 30px 0 34px; border-bottom: 1px solid var(--rule); }
+  .expertise h3 { margin-bottom: 10px; }
+  .expertise p { margin: 0; color: var(--muted); }
+  .terms { margin-top: clamp(48px, 6vw, 72px); display: grid; grid-template-columns: 5fr 7fr; gap: clamp(36px, 6vw, 90px); }
+  .terms h3 { font-size: 1.7rem; }
+  .terms p { margin: 0; }
+
+  /* Current deals: boats found on the market, with the broker's take */
+  .deals { background: var(--glass); }
+  .deals-top { display: grid; grid-template-columns: 6fr 5fr; gap: clamp(28px, 5vw, 80px); align-items: end; margin-bottom: 48px; }
+  .deals-top p { margin: 0; }
+  .deal { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(24px, 5vw, 72px); padding: 36px 0; border-top: 1px solid var(--rule); }
+  .deal:first-child { border-top: 1px solid var(--ink); }
+  .deal:last-child { border-bottom: 1px solid var(--rule); }
+  .deal .tag { display: inline-block; font-size: 0.82rem; font-weight: 600; color: var(--magenta); margin-bottom: 10px; }
+  .deal h3 { font-size: 1.75rem; line-height: 1.15; margin-bottom: 16px; }
+  .deal dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; margin: 0 0 20px; font-size: 0.97rem; }
+  .deal dt { color: var(--muted); }
+  .deal dd { margin: 0; }
+  .deal .ask { font-family: var(--serif); font-size: 1.35rem; }
+  .deal .links { display: flex; gap: 22px; flex-wrap: wrap; align-items: center; font-size: 0.97rem; }
+  .take { background: var(--white); border-left: 3px solid var(--magenta); padding: 26px 30px; align-self: start; }
+  .take b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.45rem; line-height: 1.25; margin-bottom: 12px; }
+  .take p { margin: 0 0 0.8em; color: var(--ink); }
+  .take p:last-child { margin-bottom: 0; }
+  .take small { display: block; color: var(--muted); font-size: 0.86rem; margin-bottom: 8px; }
+  .take details { margin-top: 6px; }
+  .take summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; font-weight: 500; color: var(--ink); padding: 4px 0; }
+  .take summary::-webkit-details-marker { display: none; }
+  .take summary::after { content: ""; width: 8px; height: 8px; border-right: 1.5px solid var(--magenta); border-bottom: 1.5px solid var(--magenta); transform: rotate(45deg) translateY(-3px); transition: transform 0.25s; }
+  .take details[open] summary::after { transform: rotate(-135deg) translateY(-1px); }
+  .take summary:hover { color: var(--magenta); }
+  .take .why { padding-top: 14px; margin-top: 12px; border-top: 1px solid var(--rule); }
+  .take .open-label { display: none; }
+  .take details[open] .open-label { display: inline; }
+  .take details[open] .closed-label { display: none; }
+  .deals-note { margin-top: 34px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .deals-note p { margin: 0; font-size: 0.92rem; }
+
+  /* Second opinion */
+  .opinion { background: var(--paper); padding: clamp(64px, 8vw, 96px) 0; }
+  .opinion .box { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(28px, 5vw, 72px); align-items: center; border: 1px solid var(--ink); padding: clamp(28px, 4vw, 52px); background: var(--white); position: relative; }
+  .opinion .box::before { content: ""; position: absolute; top: -1px; left: -1px; right: -1px; height: 9px; background: linear-gradient(180deg, transparent 3.5px, #F3EBD8 3.5px, #E6D9BC 5.5px, transparent 5.5px), linear-gradient(90deg, #86502A, #7A4521 50%, #8C552C); }
+  .opinion h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); }
+  .opinion p { margin: 16px 0 0; }
+  .opinion .cta { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .opinion .cta small { color: var(--muted); font-size: 0.9rem; }
+
+  /* Buying from overseas */
+  .overseas { background: var(--white); }
+  .overseas-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(36px, 6vw, 90px); }
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; border-top: 1px solid var(--ink); }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 56px 1fr; gap: 10px; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+  .steps li::before { content: counter(s, decimal-leading-zero); font-family: var(--serif); font-size: 1.35rem; color: var(--magenta); line-height: 1.3; }
+  .steps h3 { font-size: 1.3rem; margin-bottom: 4px; }
+  .steps p { margin: 0; color: var(--muted); }
+
+  /* Questions */
+  .faq-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(36px, 6vw, 90px); }
+  .faq { border-top: 1px solid var(--ink); }
+  .faq details { border-bottom: 1px solid var(--rule); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; align-items: center; padding: 22px 0; font-family: var(--serif); font-size: 1.3rem; line-height: 1.3; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: ""; flex: none; width: 9px; height: 9px; border-right: 1.5px solid var(--magenta); border-bottom: 1.5px solid var(--magenta); transform: rotate(45deg) translateY(-3px); transition: transform 0.25s; }
+  .faq details[open] summary::after { transform: rotate(-135deg); }
+  .faq summary:hover { color: var(--magenta); }
+  .faq details p { margin: 0 0 22px; color: var(--muted); }
+
+  /* Selling */
+  .selling { background: var(--navy); color: var(--paper); }
+  .selling .btn-light:hover { background: var(--glass); }
+  .selling .wrap { display: grid; grid-template-columns: 6fr 6fr; gap: clamp(36px, 6vw, 90px); align-items: end; }
+  .selling p { color: var(--mist); }
+
+  /* Consultation */
+  .consult-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(40px, 7vw, 100px); }
+  .direct { margin-top: 34px; border-top: 1px solid var(--rule); }
+  .direct a, .direct span { display: block; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+  .direct a { font-family: var(--serif); font-size: 1.45rem; }
+  .direct a:hover { color: var(--magenta); }
+  .direct span { color: var(--muted); font-size: 0.95rem; }
+  form { background: var(--white); padding: clamp(28px, 4vw, 48px); border: 1px solid var(--rule); }
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 28px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field.full { grid-column: 1 / -1; }
+  .field[hidden] { display: none; }
+  .need { margin-bottom: 30px; }
+  .need select { font-family: var(--serif); font-size: 1.35rem; padding: 8px 0 12px; border-bottom-color: var(--ink); }
+  .field label { font-size: 0.9rem; color: var(--muted); }
+  .field input, .field select, .field textarea { font: 400 1.05rem var(--sans); color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid #B9C4CB; padding: 10px 0; border-radius: 0; width: 100%; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-bottom-color: var(--navy); }
+  .field textarea { min-height: 96px; resize: vertical; }
+  form .btn { margin-top: 32px; }
+  form .btn[disabled] { opacity: 0.6; cursor: wait; }
+  .form-status { margin: 16px 0 0; font-size: 0.95rem; color: var(--magenta); min-height: 1.4em; }
+  .form-done { background: var(--white); padding: clamp(28px, 4vw, 48px); border: 1px solid var(--rule); border-top: 3px solid var(--magenta); align-self: start; }
+  .form-done h3 { font-size: 1.8rem; margin-bottom: 12px; }
+
+  footer { background: var(--navy); color: var(--mist); font-size: 0.88rem; padding: 0 0 40px; }
+  footer .wrap { padding-top: 34px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 18px 40px; flex-wrap: wrap; }
+  footer .wordmark { color: var(--paper); font-size: 1.3rem; }
+  footer p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .nav ul li:not(:last-child) { display: none; }
+    .hero-grid { grid-template-columns: 1fr; min-height: 0; padding-top: 120px; }
+    .chart-panel .map { min-height: 340px; }
+    .portrait { justify-self: start; max-width: 340px; }
+    .qual-head, .terms, .selling .wrap, .consult-grid { grid-template-columns: 1fr; }
+    .expertise { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .record { grid-template-columns: 1fr; }
+    .record div + div { padding-left: 0; border-left: 0; border-top: 1px solid rgba(246,248,248,0.28); }
+    .record div { padding: 18px 0 20px; }
+    .fields { grid-template-columns: 1fr; }
+    .deals-top, .deal, .opinion .box, .overseas-grid, .faq-grid { grid-template-columns: 1fr; }
+    .take { padding: 22px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="wordmark" href="#top">Sea Yachts</a>
+    <ul>
+      <li><a href="#qualifications">Qualifications</a></li>
+      <li><a href="#deals">Good-value deals</a></li>
+      <li><a href="#exports">Exports</a></li>
+      <li><a href="#selling">Selling</a></li>
+      <li><a class="call" href="tel:+17864069904">(786) 406-9904</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 1. HERO -->
+  <section class="hero" aria-label="Introduction">
+    <div class="wrap hero-grid">
+      <div class="hero-body">
+        <h1>Representation,<br>not salesmanship.</h1>
+        <p class="lead">Sea Yachts represents yacht buyers the way counsel represents a client. You work directly with Garry Chupurdy Jr., a licensed captain and yacht broker who knows boats from the engine room up.</p>
+        <div class="actions">
+          <a class="btn btn-navy" href="#consult">Book a consultation</a>
+          <a class="textlink" href="#qualifications">See my qualifications</a>
+        </div>
+        <div class="inlay" role="presentation" style="margin-top:clamp(44px, 7vh, 80px)"></div>
+        <div class="record">
+          <div><b>1998</b><span>Licensed captain</span></div>
+          <div><b>2008</b><span>Licensed yacht broker</span></div>
+          <div><b>2010</b><span>Founded Sea Yachts</span></div>
+        </div>
+      </div>
+      <figure class="chart-panel">
+        <div class="map" role="img" aria-label="NOAA nautical chart of Palm Beach Inlet"></div>
+        <figcaption><b>Palm Beach Inlet</b><span>26°46′N 80°02′W<br>NOAA chart. Not for navigation.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 2. QUALIFICATIONS -->
+  <section id="qualifications">
+    <div class="wrap">
+      <div class="qual-head">
+        <div>
+          <h2>Anyone can show you a boat. Few can tell you what's wrong with her.</h2>
+          <p class="lead muted" style="margin:28px 0 0">I'm Garry Chupurdy Jr. I've been running boats since 1998 and brokering them since 2008. I evaluate every yacht the way a captain does, then negotiate for you the way an advocate does.</p>
+        </div>
+        <figure class="portrait">
+          <img src="images/garry.jpg" alt="Garry Chupurdy Jr., captain and yacht broker" width="900" height="1108" loading="lazy">
+          <figcaption><b>Garry Chupurdy Jr.</b>Captain and yacht broker</figcaption>
+        </figure>
+      </div>
+      <p class="trades">Captain. Broker. Builder. Rigger. Painter. Boat investor.<span>I've done the work, not just sold it.</span></p>
+      <div class="expertise">
+        <div><h3>Diesel engines and machinery</h3><p>I know what a healthy engine room looks like, what a tired one costs, and which problems a seller would rather you didn't notice.</p></div>
+        <div><h3>Navigation and boat handling</h3><p>Sea trials run by a captain, not a salesperson. I'll tell you how she handles, and teach you to run her after closing.</p></div>
+        <div><h3>Survey and sea trial</h3><p>I know where surveyors look and what their findings are worth at the negotiating table.</p></div>
+        <div><h3>Contracts and closing</h3><p>Offers, contingencies, escrow, title, and documentation, handled with the care of a legal matter.</p></div>
+        <div><h3>Build quality and refit</h3><p>Hulls, rigging, paint, and joinery. I know what quality work looks like, and what a refit really costs.</p></div>
+        <div><h3>Value and resale</h3><p>I've bought and resold boats with my own money. I know what holds its value and what turns into a money pit.</p></div>
+      </div>
+      <div class="terms">
+        <h3>Yachts from $150K and up, for private clients anywhere in the world.</h3>
+        <div><p class="muted" style="margin-bottom:12px"><strong style="color:var(--ink);font-weight:500">We specialize in exports.</strong> Buy in Florida, and we handle the paperwork, the logistics, and delivery to the loading point for shipment to your home port.</p><p class="muted">Buyer representation is usually paid from the listing side, so it typically costs you nothing. Every purchase includes captain instruction and a full systems orientation.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. CURRENT DEALS -->
+  <section class="deals" id="deals">
+    <div class="wrap">
+      <div class="deals-top">
+        <h2>Good-value deals</h2>
+        <p class="muted">Hand-picked boats I think are worth a serious look, and why. I can represent you on any of them.</p>
+      </div>
+      <div id="deals-list"></div>
+      <div class="deals-note">
+        <p class="muted">These yachts are listed by other brokerages. Details are from the public listing and may change. Ask me before making a decision.</p>
+        <a class="btn btn-navy" href="#consult" data-topic="deal">Ask about a boat</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECOND OPINION -->
+  <section class="opinion" aria-label="Free second opinion">
+    <div class="wrap">
+      <div class="box">
+        <div>
+          <h2>Found a boat? Get a captain's opinion before you call the listing broker.</h2>
+          <p class="lead muted">Send me the listing. I'll tell you what I see, what I'd check, and whether the price makes sense. No cost and no obligation.</p>
+        </div>
+        <div class="cta">
+          <a class="btn btn-navy" href="#consult" data-topic="opinion">Send me a listing</a>
+          <small>Usually within one business day.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUYING FROM OVERSEAS -->
+  <section class="overseas" id="exports">
+    <div class="wrap overseas-grid">
+      <div>
+        <h2>Buying from overseas?</h2>
+        <p class="lead muted" style="margin-top:22px">Florida has the best selection of yachts in the world. You don't need to be here to buy one well. I act as your eyes, hands, and advocate on the ground.</p>
+      </div>
+      <ol class="steps">
+        <li><div><h3>I inspect for you</h3><p>I go aboard the boats on your short list and report back honestly, with photos and video.</p></div></li>
+        <li><div><h3>I attend survey and sea trial</h3><p>A captain on board for you, reading the surveyor's findings and putting them to work in negotiation.</p></div></li>
+        <li><div><h3>I manage the closing</h3><p>Contract, escrow, title, and documentation, handled remotely with you at every step.</p></div></li>
+        <li><div><h3>I handle the export</h3><p>Export paperwork and delivery to the loading point for shipment to your home port.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4. SELLING -->
+  <section class="selling" id="selling">
+    <div class="wrap">
+      <h2>Selling a yacht?</h2>
+      <div>
+        <p class="lead">Every listing gets its own marketing campaign and a broker who can answer a buyer's hardest questions about the engines, the systems, and the survey. That's what closes deals.</p>
+        <a class="btn btn-light" href="#consult" data-topic="sell" style="margin-top:12px">Request a valuation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUESTIONS -->
+  <section id="questions">
+    <div class="wrap faq-grid">
+      <h2>Straight answers</h2>
+      <div class="faq">
+        <details><summary>What does buyer representation cost me?</summary><p>Usually nothing. In most purchases the buyer's broker is paid from the commission the seller has already agreed to. I'll explain exactly how it works for your boat before you sign anything.</p></details>
+        <details><summary>Can you represent me on a boat listed with another broker?</summary><p>Yes. Most yachts are listed for co-brokerage, so I can represent you on almost any boat on the market, including the ones in big-brokerage ads.</p></details>
+        <details><summary>Why not just call the listing broker?</summary><p>Because they work for the seller. Their job is to get the seller the highest price. Mine is to make sure you buy the right boat at the right price.</p></details>
+        <details><summary>I'm not in Florida. Can you still help?</summary><p>Yes. I work with clients around the world and specialize in exports. I can inspect boats, attend survey and sea trial, and manage closing and export on your behalf.</p></details>
+        <details><summary>Do you also sell boats?</summary><p>Yes. Every listing gets its own marketing campaign and a broker who can answer a buyer's hardest technical questions.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CONSULTATION -->
+  <section id="consult">
+    <div class="wrap consult-grid">
+      <div>
+        <h2>Book a consultation</h2>
+        <p class="lead muted" style="margin-top:22px">Tell me what you're looking for or what you're selling. I'll reply personally within one business day.</p>
+        <div class="direct">
+          <a href="tel:+17864069904">(786) 406-9904</a>
+          <a href="mailto:Garry@SeaYachts.net">Garry@SeaYachts.net</a>
+          <span>Palm Beach County, Florida. By appointment.</span>
+        </div>
+      </div>
+      <form name="inquiry" id="inquiry" novalidate>
+        <p hidden><label>Leave this empty <input name="website" tabindex="-1" autocomplete="off"></label></p>
+
+        <div class="field full need">
+          <label for="f-topic">How can I help?</label>
+          <select id="f-topic" name="topic">
+            <option value="buy">Buy a yacht</option>
+            <option value="opinion">Get your opinion on a boat</option>
+            <option value="deal">Ask about one of your good-value deals</option>
+            <option value="export">Buy from overseas and export</option>
+            <option value="sell">Sell my yacht</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+
+        <div class="fields">
+          <!-- Buying (also used for export) -->
+          <div class="field" data-for="buy export">
+            <label for="f-budget">Budget</label>
+            <select id="f-budget" name="budget"><option>$150K to $250K</option><option>$250K to $500K</option><option>$500K to $1M</option><option>$1M to $3M</option><option>$3M and up</option></select>
+          </div>
+          <div class="field" data-for="buy export">
+            <label for="f-type">Type of yacht</label>
+            <select id="f-type" name="yacht_type"><option>Motor yacht</option><option>Sportfish</option><option>Express cruiser</option><option>Trawler</option><option>Center console</option><option>Sailing yacht or catamaran</option><option>Not sure yet</option></select>
+          </div>
+          <div class="field" data-for="buy export">
+            <label for="f-length">Length</label>
+            <select id="f-length" name="length"><option>Under 40 ft</option><option>40 to 50 ft</option><option>50 to 65 ft</option><option>65 ft and up</option><option>Not sure yet</option></select>
+          </div>
+          <div class="field" data-for="buy export sell">
+            <label for="f-when">Timeframe</label>
+            <select id="f-when" name="timeframe"><option>Ready now</option><option>Within 3 months</option><option>Within 6 months</option><option>Just exploring</option></select>
+          </div>
+          <div class="field full" data-for="export">
+            <label for="f-country">Where will the yacht go?</label>
+            <input id="f-country" name="destination" placeholder="Country and home port">
+          </div>
+
+          <!-- Opinion on a boat -->
+          <div class="field full" data-for="opinion">
+            <label for="f-link">Listing link</label>
+            <input id="f-link" name="listing_link" type="url" placeholder="Paste the YachtWorld or broker listing link" data-required>
+          </div>
+
+          <!-- One of the deals -->
+          <div class="field full" data-for="deal">
+            <label for="f-deal">Which boat?</label>
+            <select id="f-deal" name="deal"></select>
+          </div>
+
+          <!-- Selling -->
+          <div class="field full" data-for="sell" style="order:-1">
+            <label for="f-boat">Your yacht</label>
+            <input id="f-boat" name="your_yacht" placeholder="Year, builder, model, length" data-required>
+          </div>
+          <div class="field" data-for="sell" style="order:-1">
+            <label for="f-where">Where is she now?</label>
+            <input id="f-where" name="yacht_location" placeholder="City or marina">
+          </div>
+          <div class="field" data-for="sell" style="order:-1">
+            <label for="f-value">Expected price</label>
+            <select id="f-value" name="expected_price"><option>$150K to $250K</option><option>$250K to $500K</option><option>$500K to $1M</option><option>$1M to $3M</option><option>$3M and up</option><option>Not sure, I'd like a valuation</option></select>
+          </div>
+
+          <!-- Everyone -->
+          <div class="field full"><label for="f-msg" id="f-msg-label">Anything else I should know?</label><textarea id="f-msg" name="message"></textarea></div>
+          <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+          <div class="field">
+            <label for="f-contact">Best way to reach you</label>
+            <select id="f-contact" name="contact_by"><option>Phone call</option><option>Text message</option><option>Email</option><option>WhatsApp</option></select>
+          </div>
+        </div>
+        <button class="btn btn-navy" type="submit" id="f-submit">Request consultation</button>
+        <p class="form-status" id="f-status" role="status" aria-live="polite"></p>
+      </form>
+      <div class="form-done" id="f-done" hidden>
+        <h3>Thank you. I have your message.</h3>
+        <p class="muted">I'll reply personally within one business day. If it's urgent, call or text me at <a href="tel:+17864069904">(786) 406-9904</a>.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="inlay" role="presentation"></div>
+  <div class="wrap">
+    <span class="wordmark">Sea Yachts</span>
+    <p>&copy; <span id="year"></span> Sea Yachts LLC. Licensed and bonded Florida yacht brokerage. Garry Chupurdy Jr., Yacht Broker, License EBK 7119.</p>
+  </div>
+</footer>
+
+<script>
+  /* Sea Yachts database (Supabase). The publishable key is safe to show: the database
+     only lets the public add an inquiry and read published deals. */
+  var SUPABASE_URL = "https://zpokavgizlkwukmonihj.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_MLFS-SAOVwE5asfMxpBL1Q_Ub7g5ly7";
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function dealTitle(d) { return [d.year, d.builder, d.model].filter(Boolean).join(" "); }
+
+  /* Good-value deals are managed on the admin page and loaded from the database */
+  var DEALS = [];
+  function renderDeals() {
+    var list = document.getElementById("deals-list");
+    if (!DEALS.length) {
+      list.innerHTML = '<div class="deal" style="display:block"><p class="lead muted" style="margin:0">No deals posted right now. Tell me what you\u2019re looking for and I\u2019ll find it.</p></div>';
+    } else {
+      list.innerHTML = DEALS.map(function (d) {
+        var tag = d.status === "sold" ? "Sold" : d.status === "under_contract" ? "Under contract" : (d.tag || "");
+        var paras = String(d.take || "").split(/\n\s*\n/).filter(function (t) { return t.trim(); })
+          .map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
+        return '<article class="deal">' +
+          '<div>' +
+            (tag ? '<span class="tag">' + esc(tag) + '</span>' : '') +
+            '<h3>' + esc(dealTitle(d)) + '</h3>' +
+            '<dl>' +
+              (d.length_ft ? '<dt>Length</dt><dd>' + esc(Number(d.length_ft)) + ' ft</dd>' : '') +
+              (d.location ? '<dt>Location</dt><dd>' + esc(d.location) + '</dd>' : '') +
+              (d.engines ? '<dt>Engines</dt><dd>' + esc(d.engines) + '</dd>' : '') +
+              (d.price ? '<dt>Asking</dt><dd class="ask">$' + Number(d.price).toLocaleString("en-US") + '</dd>' : '') +
+            '</dl>' +
+            '<div class="links">' +
+              '<a class="textlink" href="#consult" data-topic="deal" data-deal="' + esc(dealTitle(d)) + '">Ask me about this boat</a>' +
+              (d.link ? '<a href="' + esc(d.link) + '" target="_blank" rel="noopener" class="muted">View the full listing</a>' : '') +
+            '</div>' +
+          '</div>' +
+          '<div class="take"><small>Captain\u2019s take</small><b>' + esc(d.verdict || "") + '</b>' +
+            (paras ? '<details><summary><span class="closed-label">Why I picked this boat</span><span class="open-label">Show less</span></summary><div class="why">' + paras + '</div></details>' : '') +
+          '</div>' +
+        '</article>';
+      }).join("");
+    }
+    var dealSelect = document.getElementById("f-deal");
+    dealSelect.innerHTML = DEALS.filter(function (d) { return d.status !== "sold"; }).map(function (d) {
+      return '<option>' + esc(dealTitle(d)) + '</option>';
+    }).join("") + '<option>A different boat</option>';
+  }
+  renderDeals();
+  fetch(SUPABASE_URL + "/rest/v1/deals?published=eq.true&select=*&order=sort_order.asc,created_at.desc", {
+    headers: { "apikey": SUPABASE_KEY }
+  }).then(function (r) { return r.ok ? r.json() : []; })
+    .then(function (rows) { DEALS = Array.isArray(rows) ? rows : []; renderDeals(); })
+    .catch(function () {});
+
+  /* Contact form: show only the questions that fit what the visitor needs */
+  var topic = document.getElementById("f-topic");
+  var copy = {
+    buy:     ["Anything else I should know?", "Brands you like, how you'll use her, where you cruise", "Request consultation"],
+    opinion: ["What should I look at?", "What caught your eye, and any concerns", "Get my opinion"],
+    deal:    ["Your question", "What would you like to know about this boat?", "Ask about this boat"],
+    export:  ["Anything else I should know?", "How you'll use her, shipping timeline, questions about export", "Request consultation"],
+    sell:    ["Anything else I should know?", "Engine hours, recent work, why you're selling", "Request a valuation"],
+    other:   ["How can I help?", "", "Send message"]
+  };
+  function updateForm() {
+    var v = topic.value;
+    document.querySelectorAll("#inquiry [data-for]").forEach(function (el) {
+      var show = el.getAttribute("data-for").split(" ").indexOf(v) !== -1;
+      el.hidden = !show;
+      el.querySelectorAll("input, select, textarea").forEach(function (f) {
+        f.disabled = !show;
+        if (f.hasAttribute("data-required")) f.required = show;
+      });
+    });
+    document.getElementById("f-msg-label").textContent = copy[v][0];
+    document.getElementById("f-msg").placeholder = copy[v][1];
+    document.getElementById("f-msg").required = (v === "other" || v === "deal");
+    document.getElementById("f-submit").textContent = copy[v][2];
+  }
+  topic.addEventListener("change", updateForm);
+  updateForm();
+  /* Send the form to the Sea Yachts database */
+  var form = document.getElementById("inquiry");
+  var statusEl = document.getElementById("f-status");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    statusEl.textContent = "";
+    if (form.website.value) return;                 /* spam bot filled the hidden field */
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var data = {};
+    Array.prototype.forEach.call(form.elements, function (el) {
+      if (!el.name || el.disabled || el.name === "website") return;
+      var v = String(el.value || "").trim();
+      if (v) data[el.name] = v;
+    });
+    var btn = document.getElementById("f-submit");
+    var label = btn.textContent;
+    btn.disabled = true; btn.textContent = "Sending...";
+    fetch(SUPABASE_URL + "/rest/v1/inquiries", {
+      method: "POST",
+      headers: { "apikey": SUPABASE_KEY, "Content-Type": "application/json", "Prefer": "return=minimal" },
+      body: JSON.stringify(data)
+    }).then(function (r) {
+      if (!r.ok) throw new Error("Status " + r.status);
+      form.hidden = true;
+      document.getElementById("f-done").hidden = false;
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = label;
+      statusEl.innerHTML = 'Sorry, that didn\u2019t send. Please call or text <a href="tel:+17864069904">(786) 406-9904</a>, or email <a href="mailto:Garry@SeaYachts.net">Garry@SeaYachts.net</a>.';
+    });
+  });
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("[data-topic]") : null;
+    if (!a) return;
+    topic.value = a.getAttribute("data-topic");
+    if (a.getAttribute("data-deal")) document.getElementById("f-deal").value = a.getAttribute("data-deal");
+    updateForm();
+  });
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
