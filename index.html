@@ -139,8 +139,11 @@
   .take .open-label { display: none; }
   .take details[open] .open-label { display: inline; }
   .take details[open] .closed-label { display: none; }
-  .deals-note { margin-top: 34px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .deals-note { margin-top: 34px; display: flex; justify-content: flex-end; align-items: center; gap: 24px; flex-wrap: wrap; }
   .deals-note p { margin: 0; font-size: 0.92rem; }
+  .deals-disclaimer { border-left: 3px solid var(--magenta); background: rgba(255,255,255,0.55); padding: 16px 22px; margin: 0 0 36px; max-width: 860px; }
+  .deals-disclaimer p { margin: 0 0 8px; font-size: 0.92rem; color: var(--muted); max-width: none; }
+  .deals-disclaimer p:last-child { margin-bottom: 0; color: var(--ink); }
 
   /* Second opinion */
   .opinion { background: var(--paper); padding: clamp(64px, 8vw, 96px) 0; }
@@ -300,11 +303,15 @@
     <div class="wrap">
       <div class="deals-top">
         <h2>Good-value deals</h2>
-        <p class="muted">Hand-picked boats I think are worth a serious look, and why. I can represent you on any of them.</p>
+        <p class="muted">Hand-picked boats I think are worth a serious look &mdash; and why.</p>
+      </div>
+      <div class="deals-disclaimer">
+        <p>These yachts are listed by other brokerages. I&rsquo;m sharing them because I believe they may represent interesting value based on the information publicly available at the time of posting.</p>
+        <p>Sea Yachts is not the listing broker for these yachts. Listing details, pricing, availability and condition may change and should be independently verified with the listing broker.</p>
+        <p>If you&rsquo;re interested in one of these boats, I can represent you as the buyer&rsquo;s broker and work with the listing broker on your behalf.</p>
       </div>
       <div id="deals-list"></div>
       <div class="deals-note">
-        <p class="muted">These yachts are listed by other brokerages. Details are from the public listing and may change. Ask me before making a decision.</p>
         <a class="btn btn-navy" href="#consult" data-topic="deal">Ask about a boat</a>
       </div>
     </div>
