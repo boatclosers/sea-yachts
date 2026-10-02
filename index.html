@@ -146,6 +146,15 @@
   .deal-photo .tag-over { position: absolute; top: 12px; left: 12px; background: var(--white); color: var(--magenta); font-size: 0.8rem; font-weight: 600; padding: 4px 10px; }
   .stay-note { margin: 14px 0 0; padding: 12px 14px; background: var(--white); border-left: 3px solid var(--magenta); font-size: 0.92rem; color: var(--ink); max-width: none; }
   .stay-note a { font-weight: 600; border-bottom: 1px solid var(--magenta); }
+  .share-btn { font: 500 0.97rem var(--sans); background: none; border: 0; padding: 0; color: var(--ink); cursor: pointer; border-bottom: 1px solid var(--rule); }
+  .share-btn:hover { color: var(--magenta); border-bottom-color: var(--magenta); }
+  .share-menu { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .share-menu[hidden] { display: none; }
+  .share-menu a, .share-menu button { font: 500 0.9rem var(--sans); padding: 7px 12px; border: 1px solid var(--rule); background: var(--white); color: var(--ink); cursor: pointer; }
+  .share-menu a:hover, .share-menu button:hover { border-color: var(--ink); }
+  .checked { margin: 14px 0 0; font-size: 0.86rem; color: var(--muted); }
+  .deal.flash { animation: flash 2.4s ease-out; }
+  @keyframes flash { 0%, 30% { background: rgba(138,75,42,0.10); } 100% { background: transparent; } }
   .deals-disclaimer { border-left: 3px solid var(--magenta); background: rgba(255,255,255,0.55); padding: 16px 22px; margin: 0 0 36px; max-width: 860px; }
   .deals-disclaimer p { margin: 0 0 8px; font-size: 0.92rem; color: var(--muted); max-width: none; }
   .deals-disclaimer p:last-child { margin-bottom: 0; color: var(--ink); }
@@ -497,6 +506,18 @@
     });
   }
   function dealTitle(d) { return [d.year, d.builder, d.model].filter(Boolean).join(" "); }
+  /* Each deal has its own link: seayachts.net/#deal-2014-hinckley-picnic-boat-37-mkiii-ab12cd
+     (the last 6 characters identify the boat, so the link keeps working if the title is edited) */
+  function dealSlug(d) {
+    var words = dealTitle(d).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    return "deal-" + (words ? words + "-" : "") + String(d.id).slice(0, 6);
+  }
+  function dealUrl(d) { return "https://seayachts.net/#" + dealSlug(d); }
+  function checkedText(d) {
+    if (!d.checked_at) return "";
+    var t = new Date(d.checked_at);
+    return "Price and availability checked " + t.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) + ".";
+  }
 
   /* Good-value deals are managed on the admin page and loaded from the database */
   var DEALS = [];
@@ -509,7 +530,7 @@
         var tag = d.status === "sold" ? "Sold" : d.status === "under_contract" ? "Under contract" : (d.tag || "");
         var paras = String(d.take || "").split(/\n\s*\n/).filter(function (t) { return t.trim(); })
           .map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
-        return '<article class="deal">' +
+        return '<article class="deal" id="' + esc(dealSlug(d)) + '" data-id="' + esc(d.id) + '">' +
           '<div>' +
             (d.photo_url ? '<figure class="deal-photo"><img src="' + esc(d.photo_url) + '" alt="' + esc(dealTitle(d)) + '" loading="lazy">' + (tag ? '<span class="tag-over">' + esc(tag) + '</span>' : '') + '</figure>' : '') +
             (tag && !d.photo_url ? '<span class="tag">' + esc(tag) + '</span>' : '') +
@@ -523,7 +544,13 @@
             '<div class="links">' +
               '<a class="textlink" href="#consult" data-topic="deal" data-deal="' + esc(dealTitle(d)) + '">Ask me about this boat</a>' +
               (d.link ? '<a href="' + esc(d.link) + '" target="_blank" rel="noopener" class="muted" data-outbound>See all photos \u2197</a>' : '') +
+              '<button type="button" class="share-btn" data-share>Share</button>' +
             '</div>' +
+            '<div class="share-menu" hidden>' +
+              '<a data-share-via="text" href="#">Text message</a><a data-share-via="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>' +
+              '<a data-share-via="email" href="#">Email</a><button type="button" data-share-via="copy">Copy link</button>' +
+            '</div>' +
+            (checkedText(d) ? '<p class="checked">' + esc(checkedText(d)) + '</p>' : '') +
             '<p class="stay-note" hidden>Opened in a new tab. Before you contact the listing broker, remember they represent the seller. I can represent you on this boat, usually at no cost to you. <a href="#consult" data-topic="deal" data-deal="' + esc(dealTitle(d)) + '">Ask me first</a>.</p>' +
           '</div>' +
           '<div class="take"><small>Captain\u2019s take</small><b>' + esc(d.verdict || "") + '</b>' +
@@ -541,7 +568,7 @@
   fetch(SUPABASE_URL + "/rest/v1/deals?published=eq.true&select=*&order=sort_order.asc,created_at.desc", {
     headers: { "apikey": SUPABASE_KEY }
   }).then(function (r) { return r.ok ? r.json() : []; })
-    .then(function (rows) { DEALS = Array.isArray(rows) ? rows : []; renderDeals(); })
+    .then(function (rows) { DEALS = Array.isArray(rows) ? rows : []; renderDeals(); openSharedDeal(); })
     .catch(function () {});
 
   /* Contact form: show only the questions that fit what the visitor needs */
@@ -600,6 +627,41 @@
       btn.disabled = false; btn.textContent = label;
       statusEl.innerHTML = 'Sorry, that didn\u2019t send. Please call or text <a href="tel:+17864069904">(786) 406-9904</a>, or email <a href="mailto:Garry@SeaYachts.net">Garry@SeaYachts.net</a>.';
     });
+  });
+
+  /* Opening a shared deal link scrolls to that boat */
+  function openSharedDeal() {
+    var h = decodeURIComponent(location.hash || "");
+    if (h.indexOf("#deal-") !== 0) return;
+    var key = h.slice(-6), el = null;
+    document.querySelectorAll(".deal[data-id]").forEach(function (a) { if (a.getAttribute("data-id").slice(0, 6) === key) el = a; });
+    if (!el) return;
+    el.scrollIntoView({ block: "start" });
+    el.classList.add("flash");
+  }
+
+  /* Share a deal: phones get the built-in share sheet; computers get a small menu */
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest ? e.target.closest("[data-share], [data-share-via]") : null;
+    if (!btn) return;
+    var card = btn.closest(".deal"), id = card.getAttribute("data-id");
+    var d = DEALS.filter(function (x) { return x.id === id; })[0]; if (!d) return;
+    var url = dealUrl(d), title = dealTitle(d);
+    var text = title + " \u2014 Captain\u2019s take from Sea Yachts";
+    if (btn.hasAttribute("data-share")) {
+      e.preventDefault();
+      if (navigator.share) { navigator.share({ title: title, text: text, url: url }).catch(function () {}); return; }
+      var m = card.querySelector(".share-menu"); m.hidden = !m.hidden; return;
+    }
+    var via = btn.getAttribute("data-share-via"), msg = text + ": " + url;
+    if (via === "text") { e.preventDefault(); location.href = "sms:?&body=" + encodeURIComponent(msg); }
+    if (via === "whatsapp") { btn.href = "https://wa.me/?text=" + encodeURIComponent(msg); }
+    if (via === "email") { e.preventDefault(); location.href = "mailto:?subject=" + encodeURIComponent(title + " \u2014 Sea Yachts") + "&body=" + encodeURIComponent(msg); }
+    if (via === "copy") {
+      e.preventDefault();
+      (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(function () { btn.textContent = "Link copied"; })
+        .catch(function () { window.prompt("Copy this link:", url); });
+    }
   });
 
   document.addEventListener("click", function (e) {
