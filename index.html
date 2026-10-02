@@ -141,6 +141,11 @@
   .take details[open] .closed-label { display: none; }
   .deals-note { margin-top: 34px; display: flex; justify-content: flex-end; align-items: center; gap: 24px; flex-wrap: wrap; }
   .deals-note p { margin: 0; font-size: 0.92rem; }
+  .deal-photo { position: relative; margin: 0 0 18px; aspect-ratio: 4 / 3; overflow: hidden; background: var(--white); border: 1px solid var(--rule); }
+  .deal-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .deal-photo .tag-over { position: absolute; top: 12px; left: 12px; background: var(--white); color: var(--magenta); font-size: 0.8rem; font-weight: 600; padding: 4px 10px; }
+  .stay-note { margin: 14px 0 0; padding: 12px 14px; background: var(--white); border-left: 3px solid var(--magenta); font-size: 0.92rem; color: var(--ink); max-width: none; }
+  .stay-note a { font-weight: 600; border-bottom: 1px solid var(--magenta); }
   .deals-disclaimer { border-left: 3px solid var(--magenta); background: rgba(255,255,255,0.55); padding: 16px 22px; margin: 0 0 36px; max-width: 860px; }
   .deals-disclaimer p { margin: 0 0 8px; font-size: 0.92rem; color: var(--muted); max-width: none; }
   .deals-disclaimer p:last-child { margin-bottom: 0; color: var(--ink); }
@@ -506,7 +511,8 @@
           .map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
         return '<article class="deal">' +
           '<div>' +
-            (tag ? '<span class="tag">' + esc(tag) + '</span>' : '') +
+            (d.photo_url ? '<figure class="deal-photo"><img src="' + esc(d.photo_url) + '" alt="' + esc(dealTitle(d)) + '" loading="lazy">' + (tag ? '<span class="tag-over">' + esc(tag) + '</span>' : '') + '</figure>' : '') +
+            (tag && !d.photo_url ? '<span class="tag">' + esc(tag) + '</span>' : '') +
             '<h3>' + esc(dealTitle(d)) + '</h3>' +
             '<dl>' +
               (d.length_ft ? '<dt>Length</dt><dd>' + esc(Number(d.length_ft)) + ' ft</dd>' : '') +
@@ -516,8 +522,9 @@
             '</dl>' +
             '<div class="links">' +
               '<a class="textlink" href="#consult" data-topic="deal" data-deal="' + esc(dealTitle(d)) + '">Ask me about this boat</a>' +
-              (d.link ? '<a href="' + esc(d.link) + '" target="_blank" rel="noopener" class="muted">View the full listing</a>' : '') +
+              (d.link ? '<a href="' + esc(d.link) + '" target="_blank" rel="noopener" class="muted" data-outbound>See all photos \u2197</a>' : '') +
             '</div>' +
+            '<p class="stay-note" hidden>Opened in a new tab. Before you contact the listing broker, remember they represent the seller. I can represent you on this boat, usually at no cost to you. <a href="#consult" data-topic="deal" data-deal="' + esc(dealTitle(d)) + '">Ask me first</a>.</p>' +
           '</div>' +
           '<div class="take"><small>Captain\u2019s take</small><b>' + esc(d.verdict || "") + '</b>' +
             (paras ? '<details><summary><span class="closed-label">Why I picked this boat</span><span class="open-label">Show less</span></summary><div class="why">' + paras + '</div></details>' : '') +
@@ -596,6 +603,8 @@
   });
 
   document.addEventListener("click", function (e) {
+    var out = e.target.closest ? e.target.closest("[data-outbound]") : null;
+    if (out) { var note = out.closest(".deal").querySelector(".stay-note"); if (note) note.hidden = false; return; }
     var a = e.target.closest ? e.target.closest("[data-topic]") : null;
     if (!a) return;
     topic.value = a.getAttribute("data-topic");
