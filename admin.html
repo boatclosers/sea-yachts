@@ -330,7 +330,7 @@
   function shortDate(t) { return t ? new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : ""; }
   function dealLink(d) {
     var words = [d.year, d.builder, d.model].filter(Boolean).join(" ").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    return "https://seayachts.net/#deal-" + (words ? words + "-" : "") + String(d.id).slice(0, 6);
+    return "https://seayachts.net/deals/" + (words ? words + "-" : "") + String(d.id).slice(0, 6);
   }
   var STATUS = { active: "Active", under_contract: "Under contract", sold: "Sold" };
 
