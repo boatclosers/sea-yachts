@@ -97,6 +97,9 @@
   .check input { width: 18px; height: 18px; }
   .hint { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
   .editor .actions { margin-top: 22px; }
+  .decoder { margin: 16px 0 4px; padding: 16px 18px; background: var(--glass); border: 1px solid var(--rule); }
+  .decoder summary { cursor: pointer; font-weight: 600; }
+  .decoder textarea { min-height: 140px; margin-top: 6px; font-size: 0.9rem; }
   .empty { padding: 40px 20px; text-align: center; color: var(--muted); background: var(--white); border: 1px dashed var(--rule); }
 
   @media (max-width: 760px) {
@@ -160,6 +163,15 @@
 
     <form class="editor hidden" id="deal-form">
       <h3 id="editor-title">Add a deal</h3>
+      <details class="decoder" id="decoder">
+        <summary>Fill in from a YachtWorld listing</summary>
+        <p class="hint" style="margin-top:10px">Open the listing, press <b>Ctrl+A</b> then <b>Ctrl+C</b> to copy the whole page, and paste it here. Also paste the listing's web address into "Listing link" below.</p>
+        <textarea id="d-paste" placeholder="Paste the copied listing page here"></textarea>
+        <div class="actions" style="margin-top:12px">
+          <button class="btn" type="button" id="decode-btn">Fill in the form</button>
+          <span class="msg" id="decode-msg"></span>
+        </div>
+      </details>
       <div class="grid">
         <div><label for="d-year">Year</label><input id="d-year" type="number" min="1900" max="2100"></div>
         <div><label for="d-builder">Builder</label><input id="d-builder" required></div>
@@ -331,11 +343,39 @@
     $("editor-title").textContent = d ? "Edit deal" : "Add a deal";
     Object.keys(F).forEach(function (k) { $(F[k]).value = d && d[k] != null ? d[k] : (k === "status" ? "active" : ""); });
     $("d-published").checked = d ? d.published : false;
+    $("d-paste").value = ""; $("decode-msg").textContent = ""; $("decoder").open = !d;
     $("deal-msg").textContent = ""; $("deal-msg").className = "msg";
     $("deal-form").classList.remove("hidden");
     $("deal-form").scrollIntoView({ behavior: "smooth", block: "start" });
   }
   $("new-deal").addEventListener("click", function () { openEditor(null); });
+
+  /* YachtWorld decoder: AI reads the pasted listing and fills the boat's details */
+  $("decode-btn").addEventListener("click", async function () {
+    var text = $("d-paste").value.trim();
+    var msg = $("decode-msg");
+    msg.className = "msg";
+    if (text.length < 20) { msg.textContent = "Paste the listing page first."; return; }
+    var btn = this; btn.disabled = true; msg.textContent = "Reading the listing...";
+    var res = await sb.functions.invoke("decode-listing", { body: { text: text } });
+    btn.disabled = false;
+    var data = res.data || {};
+    if (res.error || !data.fields) {
+      var detail = data.error || "";
+      if (!detail && res.error && res.error.context && res.error.context.json) {
+        try { detail = (await res.error.context.json()).error || ""; } catch (e) {}
+      }
+      msg.textContent = "Couldn't read that listing. " + (detail || "Try copying the whole page again.");
+      return;
+    }
+    var f = data.fields, filled = 0;
+    var map = { year: "d-year", builder: "d-builder", model: "d-model", length_ft: "d-length", price: "d-price", location: "d-location", engines: "d-engines" };
+    Object.keys(map).forEach(function (k) {
+      if (f[k] !== null && f[k] !== undefined && f[k] !== "") { $(map[k]).value = f[k]; filled++; }
+    });
+    msg.className = "msg ok";
+    msg.textContent = filled ? "Filled in " + filled + " fields. Check each one, then add your verdict and take." : "Nothing usable found. Fill in the details by hand.";
+  });
   $("cancel-deal").addEventListener("click", function () { $("deal-form").classList.add("hidden"); });
 
   $("deal-form").addEventListener("submit", async function (e) {
