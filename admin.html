@@ -78,7 +78,7 @@
   .actions select { width: auto; padding: 6px 10px; font-size: 0.9rem; }
 
   /* Deals */
-  .deal-row { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 16px 20px; }
+  .deal-row { display: grid; grid-template-columns: auto auto 1fr auto; gap: 16px; align-items: center; padding: 16px 20px; }
   .order { display: flex; flex-direction: column; gap: 4px; }
   .order button { width: 30px; height: 26px; border: 1px solid var(--rule); background: var(--white); cursor: pointer; font-size: 0.8rem; }
   .order button:disabled { opacity: 0.3; cursor: default; }
@@ -100,11 +100,17 @@
   .decoder { margin: 16px 0 4px; padding: 16px 18px; background: var(--glass); border: 1px solid var(--rule); }
   .decoder summary { cursor: pointer; font-weight: 600; }
   .decoder textarea { min-height: 140px; margin-top: 6px; font-size: 0.9rem; }
+  .photo-pick { display: grid; grid-template-columns: 220px 1fr; gap: 18px; align-items: start; }
+  .photo-preview { aspect-ratio: 4 / 3; background: var(--glass) center / cover no-repeat; border: 1px solid var(--rule); display: grid; place-items: center; color: var(--muted); font-size: 0.85rem; }
+  .photo-preview.has span { display: none; }
+  .photo-pick input[type=file] { border: 0; padding: 0; }
+  .thumb { width: 72px; aspect-ratio: 4 / 3; background: var(--glass) center / cover no-repeat; border: 1px solid var(--rule); }
   .empty { padding: 40px 20px; text-align: center; color: var(--muted); background: var(--white); border: 1px dashed var(--rule); }
 
   @media (max-width: 760px) {
     header h1 span { display: none; }
     .grid { grid-template-columns: 1fr 1fr; }
+    .photo-pick { grid-template-columns: 1fr; }
     .details { grid-template-columns: 1fr; gap: 2px; }
     .details dd { margin-bottom: 10px; }
   }
@@ -181,6 +187,17 @@
         <div class="span2"><label for="d-location">Location</label><input id="d-location" placeholder="City, state"></div>
         <div class="span2"><label for="d-engines">Engines</label><input id="d-engines" placeholder="e.g. Twin CAT C18s, 1,100 hours"></div>
         <div class="span2"><label for="d-link">Listing link</label><input id="d-link" type="url" placeholder="https://www.yachtworld.com/..."></div>
+        <div class="span4">
+          <label>Cover photo</label>
+          <div class="photo-pick">
+            <div class="photo-preview" id="photo-preview"><span>No photo</span></div>
+            <div>
+              <input type="file" id="d-photo" accept="image/jpeg,image/png,image/webp">
+              <p class="hint">On the listing, right-click the main photo and choose <b>Save image as</b>, then choose that file here. It's resized automatically.</p>
+              <button class="btn small light" type="button" id="photo-remove">Remove photo</button>
+            </div>
+          </div>
+        </div>
         <div class="span4"><label for="d-verdict">Your one-line verdict</label><input id="d-verdict" placeholder="e.g. Priced below comparable boats, with low engine hours."></div>
         <div class="span4"><label for="d-take">Why I picked this boat</label><textarea id="d-take" placeholder="Why she stands out.&#10;&#10;What I'd check at survey and sea trial.&#10;&#10;Who she's right for."></textarea><p class="hint">Leave a blank line between paragraphs.</p></div>
         <div><label for="d-tag">Label</label><input id="d-tag" placeholder="New find, Price drop..." list="tag-options"></div>
@@ -324,6 +341,7 @@
       var meta = [d.length_ft ? Number(d.length_ft) + " ft" : "", d.location, d.price ? "$" + Number(d.price).toLocaleString("en-US") : ""].filter(Boolean).join(" \u00b7 ");
       return '<article class="card" data-id="' + d.id + '"><div class="deal-row">' +
         '<div class="order"><button data-up ' + (i === 0 ? "disabled" : "") + ' aria-label="Move up">\u25B2</button><button data-down ' + (i === DEALS.length - 1 ? "disabled" : "") + ' aria-label="Move down">\u25BC</button></div>' +
+        '<div class="thumb" style="' + (d.photo_url ? "background-image:url('" + esc(d.photo_url) + "')" : "") + '"></div>' +
         '<div><h3>' + esc(title) + '</h3><div class="meta">' + esc(meta) + '</div>' +
           '<div class="badges"><span class="pill ' + (d.published ? "live" : "draft") + '">' + (d.published ? "On website" : "Hidden") + '</span>' +
           '<span class="pill">' + STATUS[d.status] + '</span>' + (d.tag ? '<span class="pill">' + esc(d.tag) + '</span>' : '') + '</div></div>' +
@@ -336,6 +354,38 @@
     }).join("");
   }
 
+  /* Cover photo: resized in the browser, then stored in Supabase Storage */
+  var photoFile = null, photoRemoved = false, photoUrl = null;
+  function showPhoto(url) {
+    var el = $("photo-preview");
+    el.style.backgroundImage = url ? "url('" + url + "')" : "";
+    el.classList.toggle("has", !!url);
+  }
+  $("d-photo").addEventListener("change", function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    photoFile = f; photoRemoved = false; showPhoto(URL.createObjectURL(f));
+  });
+  $("photo-remove").addEventListener("click", function () {
+    photoFile = null; photoRemoved = true; $("d-photo").value = ""; showPhoto(null);
+  });
+  function resizeImage(file, maxW) {
+    return new Promise(function (resolve, reject) {
+      var img = new Image();
+      img.onload = function () {
+        var scale = Math.min(1, maxW / img.width);
+        var c = document.createElement("canvas");
+        c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        c.toBlob(function (b) { b ? resolve(b) : reject(new Error("resize failed")); }, "image/jpeg", 0.85);
+      };
+      img.onerror = function () { reject(new Error("That file isn't a photo the browser can read.")); };
+      img.src = URL.createObjectURL(file);
+    });
+  }
+  function storagePath(url) {
+    var m = String(url || "").match(/\/deal-photos\/(.+)$/); return m ? m[1] : null;
+  }
+
   var F = { year: "d-year", builder: "d-builder", model: "d-model", length_ft: "d-length", price: "d-price", location: "d-location", engines: "d-engines", link: "d-link", verdict: "d-verdict", take: "d-take", tag: "d-tag", status: "d-status" };
 
   function openEditor(d) {
@@ -344,6 +394,7 @@
     Object.keys(F).forEach(function (k) { $(F[k]).value = d && d[k] != null ? d[k] : (k === "status" ? "active" : ""); });
     $("d-published").checked = d ? d.published : false;
     $("d-paste").value = ""; $("decode-msg").textContent = ""; $("decoder").open = !d;
+    photoFile = null; photoRemoved = false; photoUrl = d ? d.photo_url : null; $("d-photo").value = ""; showPhoto(photoUrl);
     $("deal-msg").textContent = ""; $("deal-msg").className = "msg";
     $("deal-form").classList.remove("hidden");
     $("deal-form").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -387,6 +438,19 @@
       else row[k] = v === "" ? null : v;
     });
     row.published = $("d-published").checked;
+    var oldPath = storagePath(photoUrl);
+    if (photoFile) {
+      $("deal-msg").textContent = "Uploading photo...";
+      try {
+        var blob = await resizeImage(photoFile, 1600);
+        var path = (window.crypto && crypto.randomUUID ? crypto.randomUUID() : Date.now() + "-" + Math.random().toString(36).slice(2)) + ".jpg";
+        var up = await sb.storage.from("deal-photos").upload(path, blob, { contentType: "image/jpeg" });
+        if (up.error) throw up.error;
+        row.photo_url = sb.storage.from("deal-photos").getPublicUrl(path).data.publicUrl;
+      } catch (err) { $("deal-msg").textContent = "Photo upload failed: " + (err.message || err); return; }
+    } else if (photoRemoved) {
+      row.photo_url = null;
+    }
     if (!row.builder) { $("deal-msg").textContent = "Builder is required."; return; }
     $("deal-msg").textContent = "Saving...";
     var r;
@@ -396,6 +460,7 @@
       r = await sb.from("deals").insert(row);
     }
     if (r.error) { $("deal-msg").textContent = "Could not save: " + r.error.message; return; }
+    if ((photoFile || photoRemoved) && oldPath) sb.storage.from("deal-photos").remove([oldPath]);
     $("deal-form").classList.add("hidden");
     loadDeals();
   });
@@ -412,6 +477,7 @@
     if (e.target.closest("[data-delete]")) {
       if (!confirm("Delete this deal for good?")) return;
       r = await sb.from("deals").delete().eq("id", id);
+      if (!r.error && storagePath(d.photo_url)) sb.storage.from("deal-photos").remove([storagePath(d.photo_url)]);
       if (r.error) return alert("Could not delete. Try again.");
       return loadDeals();
     }
