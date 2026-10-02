@@ -1,0 +1,18 @@
+# Keeps the free Sea Yachts Supabase database from pausing on quiet weeks.
+# Every 3 days it reads the public deals list, which counts as activity.
+name: Keep Supabase awake
+
+on:
+  schedule:
+    - cron: "0 13 */3 * *"   # every 3 days at 13:00 UTC
+  workflow_dispatch:          # adds a "Run workflow" button for a manual test
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping the Sea Yachts database
+        run: |
+          curl -sS -f -o /dev/null -w "Supabase responded: %{http_code}\n" \
+            -H "apikey: sb_publishable_MLFS-SAOVwE5asfMxpBL1Q_Ub7g5ly7" \
+            "https://zpokavgizlkwukmonihj.supabase.co/rest/v1/deals?select=id&limit=1"
