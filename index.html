@@ -152,6 +152,7 @@
   .share-menu[hidden] { display: none; }
   .share-menu a, .share-menu button { font: 500 0.9rem var(--sans); padding: 7px 12px; border: 1px solid var(--rule); background: var(--white); color: var(--ink); cursor: pointer; }
   .share-menu a:hover, .share-menu button:hover { border-color: var(--ink); }
+  .deal h3 a:hover { color: var(--magenta); }
   .checked { margin: 14px 0 0; font-size: 0.86rem; color: var(--muted); }
   .deal.flash { animation: flash 2.4s ease-out; }
   @keyframes flash { 0%, 30% { background: rgba(138,75,42,0.10); } 100% { background: transparent; } }
@@ -512,7 +513,8 @@
     var words = dealTitle(d).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
     return "deal-" + (words ? words + "-" : "") + String(d.id).slice(0, 6);
   }
-  function dealUrl(d) { return "https://seayachts.net/#" + dealSlug(d); }
+  function dealPath(d) { return "/deals/" + dealSlug(d).replace(/^deal-/, ""); }   /* the boat's own searchable page */
+  function dealUrl(d) { return "https://seayachts.net" + dealPath(d); }
   function checkedText(d) {
     if (!d.checked_at) return "";
     var t = new Date(d.checked_at);
@@ -534,7 +536,7 @@
           '<div>' +
             (d.photo_url ? '<figure class="deal-photo"><img src="' + esc(d.photo_url) + '" alt="' + esc(dealTitle(d)) + '" loading="lazy">' + (tag ? '<span class="tag-over">' + esc(tag) + '</span>' : '') + '</figure>' : '') +
             (tag && !d.photo_url ? '<span class="tag">' + esc(tag) + '</span>' : '') +
-            '<h3>' + esc(dealTitle(d)) + '</h3>' +
+            '<h3><a href="' + esc(dealPath(d)) + '">' + esc(dealTitle(d)) + '</a></h3>' +
             '<dl>' +
               (d.length_ft ? '<dt>Length</dt><dd>' + esc(Number(d.length_ft)) + ' ft</dd>' : '') +
               (d.location ? '<dt>Location</dt><dd>' + esc(d.location) + '</dd>' : '') +
@@ -544,6 +546,7 @@
             '<div class="links">' +
               '<a class="textlink" href="#consult" data-topic="deal" data-deal="' + esc(dealTitle(d)) + '">Ask me about this boat</a>' +
               (d.link ? '<a href="' + esc(d.link) + '" target="_blank" rel="noopener" class="muted" data-outbound>See all photos \u2197</a>' : '') +
+              '<a class="muted" href="' + esc(dealPath(d)) + '">Full details</a>' +
               '<button type="button" class="share-btn" data-share>Share</button>' +
             '</div>' +
             '<div class="share-menu" hidden>' +
@@ -563,6 +566,7 @@
     dealSelect.innerHTML = DEALS.filter(function (d) { return d.status !== "sold"; }).map(function (d) {
       return '<option>' + esc(dealTitle(d)) + '</option>';
     }).join("") + '<option>A different boat</option>';
+    if (window.__pendingDeal) dealSelect.value = window.__pendingDeal;
   }
   renderDeals();
   fetch(SUPABASE_URL + "/rest/v1/deals?published=eq.true&select=*&order=sort_order.asc,created_at.desc", {
@@ -597,6 +601,10 @@
     document.getElementById("f-submit").textContent = copy[v][2];
   }
   topic.addEventListener("change", updateForm);
+  (function () {
+    var q = new URLSearchParams(location.search), t = q.get("topic");
+    if (t && copy[t]) { topic.value = t; window.__pendingDeal = q.get("deal"); }
+  })();
   updateForm();
   /* Send the form to the Sea Yachts database */
   var form = document.getElementById("inquiry");
