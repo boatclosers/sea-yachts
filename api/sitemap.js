@@ -15,7 +15,8 @@ module.exports = async (req, res) => {
     const r = await fetch(`${SUPABASE_URL}/rest/v1/deals?published=eq.true&select=id,year,builder,model,updated_at`, { headers: { apikey: SUPABASE_KEY } });
     deals = r.ok ? await r.json() : [];
   } catch (e) { deals = []; }
-  const urls = [`<url><loc>${SITE}/</loc></url>`].concat(
+  const pages = ["/", "/buyer-representation", "/selling", "/exports"];
+  const urls = pages.map((p) => `<url><loc>${SITE}${p}</loc></url>`).concat(
     deals.map((d) => `<url><loc>${SITE}/deals/${slug(d)}</loc><lastmod>${new Date(d.updated_at).toISOString().slice(0, 10)}</lastmod></url>`)
   );
   res.setHeader("Content-Type", "application/xml; charset=utf-8");
