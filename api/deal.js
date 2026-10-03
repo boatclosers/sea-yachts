@@ -47,11 +47,12 @@ footer{background:var(--navy);color:rgba(251,251,249,.72);font-size:.88rem;paddi
 function page({ head, body, status }) {
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Crect%20width%3D%2240%22%20height%3D%2240%22%20rx%3D%226%22%20fill%3D%22%230E2235%22/%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23FBFBF9%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M20%204%20L23.5%2020%20L20%2036%20L16.5%2020%20Z%22%20fill%3D%22%23FBFBF9%22/%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%222.4%22%20fill%3D%22%23C98A5E%22/%3E%3C/svg%3E">
 ${head}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Albert+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>${CSS}</style></head><body>
-<header><div class="wrap"><a class="wordmark" href="/">Sea Yachts</a><a class="call" href="tel:+17864069904">(786) 406-9904</a></div></header>
+<header><div class="wrap"><a class="wordmark" href="/" style="display:inline-flex;align-items:center;gap:10px"><svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true" style="flex:none"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M20 3 L23 20 L20 37 L17 20 Z" fill="currentColor"/><path d="M3 20 L20 17.5 L37 20 L20 22.5 Z" fill="currentColor" opacity=".45"/><circle cx="20" cy="20" r="2" fill="#8A4B2A"/></svg>Sea Yachts</a><a class="call" href="tel:+17864069904">(786) 406-9904</a></div></header>
 ${body}
 <footer><div class="wrap">&copy; ${new Date().getFullYear()} Sea Yachts LLC. Licensed and bonded Florida yacht brokerage. Garry Chupurdy Jr., Yacht Broker, License EBK 7119.</div></footer>
 </body></html>`;
