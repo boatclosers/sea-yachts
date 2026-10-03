@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sea Yachts | Yacht Buyer Representation, Palm Beach</title>
+<title>Sea Yachts | Yacht Buyer's Broker, Palm Beach</title>
 <meta name="description" content="Yacht buyer representation in Palm Beach, Florida, led by a licensed captain since 1998 and licensed yacht broker since 2008. Yachts from $150K and up for private clients worldwide, with export specialists.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Crect%20width%3D%2240%22%20height%3D%2240%22%20rx%3D%226%22%20fill%3D%22%230E2235%22/%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%23FBFBF9%22%20stroke-width%3D%221.4%22/%3E%3Cpath%20d%3D%22M20%204%20L23.5%2020%20L20%2036%20L16.5%2020%20Z%22%20fill%3D%22%23FBFBF9%22/%3E%3Cpath%20d%3D%22M4%2020%20L20%2017%20L36%2020%20L20%2023%20Z%22%20fill%3D%22%23FBFBF9%22%20opacity%3D%22.5%22/%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%222.4%22%20fill%3D%22%23C98A5E%22/%3E%3C/svg%3E">
+<meta property="og:title" content="Sea Yachts | Yacht buyer's broker, Palm Beach">
+<meta property="og:description" content="Representation, not salesmanship. Licensed captain since 1998 and yacht broker since 2008.">
+<meta property="og:image" content="https://seayachts.net/images/inlet-chart.jpg">
+<meta property="og:url" content="https://seayachts.net/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Albert+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -55,15 +60,22 @@
   header.site { position: absolute; top: 0; left: 0; right: 0; z-index: 10; color: var(--ink); padding-top: env(safe-area-inset-top, 0px); }
   .nav { display: flex; justify-content: space-between; align-items: center; height: 92px; gap: 24px; }
   .wordmark { font-family: var(--serif); font-size: 1.6rem; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); }
+  .brand .mark { width: 38px; height: 38px; flex: none; color: var(--navy); }
+  .brand .wordmark { display: block; font-size: 1.75rem; line-height: 1; letter-spacing: 0.005em; }
+  .brand small { display: block; font-size: 0.82rem; color: var(--muted); margin-top: 4px; letter-spacing: 0.02em; }
+  footer .brand { color: var(--paper); }
+  footer .brand .mark { color: var(--paper); width: 30px; height: 30px; }
   .nav ul { display: flex; gap: 32px; list-style: none; margin: 0; padding: 0; align-items: center; }
   .nav a:hover { color: var(--magenta); }
-  .nav .call { background: var(--navy); color: var(--paper); padding: 11px 20px; }
+  .nav .call { background: var(--navy); color: var(--paper); padding: 11px 20px; white-space: nowrap; }
   .nav .call:hover { background: var(--magenta); color: var(--paper); }
 
   /* Hero: crisp paper, with a framed NOAA chart */
   .hero { background: var(--paper); color: var(--ink); padding: 0; }
   .hero-grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(36px, 5vw, 80px); align-items: stretch; min-height: 100vh; min-height: 100svh; padding-top: 112px; padding-bottom: 48px; }
   .hero-body { display: flex; flex-direction: column; justify-content: center; }
+  .kicker { font-size: 1.02rem; font-weight: 600; color: var(--magenta); margin: 0 0 14px; letter-spacing: 0.01em; animation: rise 1.3s cubic-bezier(.2,.6,.2,1) both; }
   .hero h1 { font-size: clamp(2.7rem, 5.5vw, 5.4rem); line-height: 0.98; max-width: none; animation: rise 1.3s cubic-bezier(.2,.6,.2,1) both; }
   .hero .lead { color: var(--muted); max-width: 46ch; margin: 30px 0 34px; animation: rise 1.3s cubic-bezier(.2,.6,.2,1) 0.2s both; }
   .hero .actions { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; animation: rise 1.3s cubic-bezier(.2,.6,.2,1) 0.35s both; }
@@ -235,6 +247,10 @@
   }
   @media (max-width: 640px) {
     .record { grid-template-columns: 1fr; }
+    .brand small { display: none; }
+    .brand .wordmark { font-size: 1.45rem; }
+    .brand .mark { width: 32px; height: 32px; }
+    .nav .call { padding: 10px 14px; font-size: 0.95rem; }
     .record div + div { padding-left: 0; border-left: 0; border-top: 1px solid rgba(246,248,248,0.28); }
     .record div { padding: 18px 0 20px; }
     .fields { grid-template-columns: 1fr; }
@@ -247,7 +263,7 @@
 
 <header class="site">
   <div class="wrap nav">
-    <a class="wordmark" href="#top">Sea Yachts</a>
+    <a class="brand" href="#top" aria-label="Sea Yachts home"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M20 3 L23 20 L20 37 L17 20 Z" fill="currentColor"/><path d="M3 20 L20 17.5 L37 20 L20 22.5 Z" fill="currentColor" opacity=".45"/><circle cx="20" cy="20" r="2" fill="#8A4B2A"/></svg><span><span class="wordmark">Sea Yachts</span><small>Yacht brokerage, Palm Beach</small></span></a>
     <ul>
       <li><a href="#qualifications">Qualifications</a></li>
       <li><a href="#deals">Good-value deals</a></li>
@@ -264,8 +280,9 @@
   <section class="hero" aria-label="Introduction">
     <div class="wrap hero-grid">
       <div class="hero-body">
+        <p class="kicker">Yacht buyer&rsquo;s broker, Palm Beach</p>
         <h1>Representation,<br>not salesmanship.</h1>
-        <p class="lead">Sea Yachts represents yacht buyers the way counsel represents a client. You work directly with Garry Chupurdy Jr., a licensed captain and yacht broker who knows boats from the engine room up.</p>
+        <p class="lead">I represent yacht buyers the way counsel represents a client. You work directly with me, Garry Chupurdy Jr., a licensed captain and yacht broker, from the first call to closing.</p>
         <div class="actions">
           <a class="btn btn-navy" href="#consult">Book a consultation</a>
           <a class="textlink" href="#qualifications">See my qualifications</a>
@@ -490,7 +507,7 @@
 <footer>
   <div class="inlay" role="presentation"></div>
   <div class="wrap">
-    <span class="wordmark">Sea Yachts</span>
+    <span class="brand"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M20 3 L23 20 L20 37 L17 20 Z" fill="currentColor"/><path d="M3 20 L20 17.5 L37 20 L20 22.5 Z" fill="currentColor" opacity=".45"/><circle cx="20" cy="20" r="2" fill="#8A4B2A"/></svg><span class="wordmark">Sea Yachts</span></span>
     <p>&copy; <span id="year"></span> Sea Yachts LLC. Licensed and bonded Florida yacht brokerage. Garry Chupurdy Jr., Yacht Broker, License EBK 7119.</p>
   </div>
 </footer>
