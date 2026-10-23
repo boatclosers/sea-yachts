@@ -261,6 +261,32 @@
   .deals-disclaimer p { margin: 0 0 8px; font-size: 0.92rem; color: var(--muted); max-width: none; }
   .deals-disclaimer p:last-child { margin-bottom: 0; color: var(--ink); }
 
+  /* Deals carousel: swipe on phones, arrows on computers */
+  .deals-cta { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; margin: 0 0 30px; }
+  .deals-cta p { margin: 0; font-size: 1.02rem; max-width: 60ch; }
+  .carousel { position: relative; }
+  .carousel-bar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .carousel-count { font-size: 0.92rem; color: var(--muted); }
+  .carousel-arrows { display: flex; gap: 10px; }
+  .carousel-arrows button { width: 46px; height: 46px; border: 1px solid var(--ink); background: var(--white); color: var(--ink); font-size: 1.2rem; cursor: pointer; }
+  .carousel-arrows button:hover { background: var(--navy); color: var(--paper); }
+  .carousel-arrows button:disabled { opacity: 0.3; cursor: default; background: var(--white); color: var(--ink); }
+  .carousel-bar[hidden] { display: none; }
+  .deals-track { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 14px; -webkit-overflow-scrolling: touch; }
+  .deals-track .deal { display: flex; flex-direction: column; flex: 0 0 min(86vw, 420px); scroll-snap-align: start; background: var(--white); border: 1px solid var(--rule); padding: 28px 26px; gap: 18px; }
+  .deals-track .deal:first-child, .deals-track .deal:last-child { border: 1px solid var(--rule); }
+  .deals-track .deal.deal-empty { flex: 1 1 100%; }
+  .deals-track .deal h3 { font-size: 1.5rem; }
+  .deals-track .take { background: var(--paper); padding: 20px 22px; }
+  .deals-track .take b { font-size: 1.2rem; }
+  .rep { margin-top: auto; background: var(--navy); color: var(--paper); padding: 20px 22px; }
+  .rep p { margin: 0 0 12px; font-size: 0.95rem; max-width: none; }
+  .rep p b { display: block; font-family: var(--serif); font-weight: 400; font-size: 1.25rem; margin-bottom: 4px; }
+  .rep .rep-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .rep .rep-actions a { padding: 11px 16px; font-weight: 500; font-size: 0.95rem; border: 1px solid rgba(251,251,249,0.5); }
+  .rep .rep-actions a.primary { background: var(--paper); color: var(--navy); border-color: var(--paper); }
+  .rep .rep-actions a:hover { background: var(--magenta); color: var(--paper); border-color: var(--magenta); }
+
   /* Second opinion */
   .opinion { background: var(--paper); padding: clamp(64px, 8vw, 96px) 0; }
   .opinion .box { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(28px, 5vw, 72px); align-items: center; border: 1px solid var(--ink); padding: clamp(28px, 4vw, 52px); background: var(--white); position: relative; }
@@ -424,15 +450,29 @@
   <section class="deals" id="deals">
     <div class="wrap">
       <div class="deals-top">
-        <h2>Good-value deals</h2>
-        <p class="muted">Hand-picked boats I think are worth a serious look &mdash; and why.</p>
+        <h2>Good-value yachts for sale, picked by a buyer&rsquo;s broker</h2>
+        <p class="muted">Hand-picked boats I think are worth a serious look &mdash; and why. Found one you like? Email or text me before you contact the listing broker.</p>
+      </div>
+      <div class="deals-cta">
+        <a class="btn btn-navy" href="mailto:Garry@SeaYachts.net?subject=Yacht%20buyer%20representation">Email Garry</a>
+        <a class="btn btn-light" style="border-color:var(--navy)" href="sms:+17864069904?&body=Hi%20Garry%2C%20I%27m%20looking%20for%20a%20yacht%20and%20would%20like%20you%20to%20represent%20me.">Text Garry</a>
+        <p>The listing broker works for the seller. I work for you: I check the boat like a captain, steer the survey and sea trial, and negotiate the price, usually at no cost to you.</p>
       </div>
       <div class="deals-disclaimer">
         <p>These yachts are listed by other brokerages. I&rsquo;m sharing them because I believe they may represent interesting value based on the information publicly available at the time of posting.</p>
         <p>Sea Yachts is not the listing broker for these yachts. Listing details, pricing, availability and condition may change and should be independently verified with the listing broker.</p>
         <p>If you&rsquo;re interested in one of these boats, I can represent you as the buyer&rsquo;s broker and work with the listing broker on your behalf.</p>
       </div>
-      <div id="deals-list"></div>
+      <div class="carousel">
+        <div class="carousel-bar" id="deals-bar" hidden>
+          <span class="carousel-count" id="deals-count"></span>
+          <div class="carousel-arrows">
+            <button type="button" id="deals-prev" aria-label="Previous boat">&larr;</button>
+            <button type="button" id="deals-next" aria-label="Next boat">&rarr;</button>
+          </div>
+        </div>
+        <div id="deals-list" class="deals-track"></div>
+      </div>
       <div class="deals-note">
         <a class="btn btn-navy" href="#consult" data-topic="deal">Ask about a boat</a>
       </div>
@@ -635,7 +675,7 @@
   function renderDeals() {
     var list = document.getElementById("deals-list");
     if (!DEALS.length) {
-      list.innerHTML = '<div class="deal" style="display:block"><p class="lead muted" style="margin:0">No deals posted right now. Tell me what you\u2019re looking for and I\u2019ll find it.</p></div>';
+      list.innerHTML = '<div class="deal deal-empty"><p class="lead muted" style="margin:0">No deals posted right now. Tell me what you\u2019re looking for and I\u2019ll find it.</p></div>';
     } else {
       list.innerHTML = DEALS.map(function (d) {
         var tag = d.status === "sold" ? "Sold" : d.status === "under_contract" ? "Under contract" : (d.tag || "");
@@ -668,6 +708,13 @@
           '<div class="take"><small>Captain\u2019s take</small><b>' + esc(d.verdict || "") + '</b>' +
             (paras ? '<details><summary><span class="closed-label">Why I picked this boat</span><span class="open-label">Show less</span></summary><div class="why">' + paras + '</div></details>' : '') +
           '</div>' +
+          (d.status === "sold" ? '' :
+          '<div class="rep"><p><b>Want me on your side for this boat?</b>I\u2019ll represent you as your buyer\u2019s broker, usually at no cost to you.</p>' +
+            '<div class="rep-actions">' +
+              '<a class="primary" href="mailto:Garry@SeaYachts.net?subject=' + encodeURIComponent(dealTitle(d) + " \u2014 please represent me") + '&body=' + encodeURIComponent("Hi Garry,\n\nI'm interested in the " + dealTitle(d) + " on your site (" + dealUrl(d) + "). Can you represent me?\n\n") + '">Email Garry</a>' +
+              '<a href="sms:+17864069904?&body=' + encodeURIComponent("Hi Garry, I'm interested in the " + dealTitle(d) + " on your site. Can you represent me?") + '">Text me</a>' +
+              '<a href="#consult" data-topic="deal" data-deal="' + esc(dealTitle(d)) + '">Ask online</a>' +
+            '</div></div>') +
         '</article>';
       }).join("");
     }
@@ -676,7 +723,30 @@
       return '<option>' + esc(dealTitle(d)) + '</option>';
     }).join("") + '<option>A different boat</option>';
     if (window.__pendingDeal) dealSelect.value = window.__pendingDeal;
+    updateCarousel();
   }
+
+  /* Carousel arrows and "Boat 1 of 3" counter */
+  var track = document.getElementById("deals-list");
+  function cardStep() {
+    var c = track.querySelector(".deal");
+    return c ? c.getBoundingClientRect().width + 22 : track.clientWidth;
+  }
+  function updateCarousel() {
+    var n = track.querySelectorAll(".deal[data-id]").length;
+    var bar = document.getElementById("deals-bar");
+    bar.hidden = n < 2;
+    if (n < 2) return;
+    var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8;
+    var i = atEnd ? n : Math.min(n, Math.round(track.scrollLeft / cardStep()) + 1);
+    document.getElementById("deals-count").textContent = "Boat " + i + " of " + n + (window.matchMedia("(hover: hover)").matches ? "" : " \u2014 swipe for more");
+    document.getElementById("deals-prev").disabled = track.scrollLeft < 8;
+    document.getElementById("deals-next").disabled = atEnd;
+  }
+  document.getElementById("deals-prev").addEventListener("click", function () { track.scrollBy({ left: -cardStep(), behavior: "smooth" }); });
+  document.getElementById("deals-next").addEventListener("click", function () { track.scrollBy({ left: cardStep(), behavior: "smooth" }); });
+  track.addEventListener("scroll", function () { window.requestAnimationFrame(updateCarousel); }, { passive: true });
+  window.addEventListener("resize", updateCarousel);
   renderDeals();
   fetch(SUPABASE_URL + "/rest/v1/deals?published=eq.true&select=*&order=sort_order.asc,created_at.desc", {
     headers: { "apikey": SUPABASE_KEY }
@@ -753,7 +823,8 @@
     var key = h.slice(-6), el = null;
     document.querySelectorAll(".deal[data-id]").forEach(function (a) { if (a.getAttribute("data-id").slice(0, 6) === key) el = a; });
     if (!el) return;
-    el.scrollIntoView({ block: "start" });
+    track.scrollLeft = el.offsetLeft - track.offsetLeft;
+    document.getElementById("deals").scrollIntoView({ block: "start" });
     el.classList.add("flash");
   }
 
