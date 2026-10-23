@@ -981,6 +981,61 @@
   window.addEventListener("focus", welcomeBack);
   document.getElementById("back-close").addEventListener("click", function () { bar.hidden = true; });
 })();
+/* Email and Text buttons on computers: many computers have no mail or texting app set up,
+   so instead of a dead click, offer Gmail, Outlook, the mail app, or copying the address/number. */
+(function () {
+  if (!window.matchMedia || window.matchMedia("(pointer: coarse)").matches) return;   /* phones and tablets: links work as-is */
+  var EMAIL = "Garry@SeaYachts.net", PHONE = "(786) 406-9904", PHONE_RAW = "+17864069904";
+  var dlg = document.createElement("dialog");
+  if (!dlg.showModal) return;
+  dlg.className = "leave"; dlg.id = "reach"; dlg.setAttribute("aria-label", "Contact Garry");
+  document.body.appendChild(dlg);
+  function escH(s) { return String(s || "").replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function param(href, key) { var m = href.match(new RegExp("[?&]" + key + "=([^&]*)")); try { return m ? decodeURIComponent(m[1]) : ""; } catch (e) { return ""; } }
+  function emailChoices(subject, body) {
+    var to = encodeURIComponent(EMAIL), s = encodeURIComponent(subject || "Yacht inquiry"), b = encodeURIComponent(body || "");
+    return '<div class="acts">' +
+      '<a class="photos-btn" data-done target="_blank" rel="noopener" href="https://mail.google.com/mail/?view=cm&fs=1&to=' + to + '&su=' + s + '&body=' + b + '">Gmail</a>' +
+      '<a class="photos-btn" data-done target="_blank" rel="noopener" href="https://outlook.live.com/mail/0/deeplink/compose?to=' + to + '&subject=' + s + '&body=' + b + '">Outlook</a>' +
+      '<a class="stay" data-direct data-done href="mailto:' + EMAIL + '?subject=' + s + '&body=' + b + '">My email app</a>' +
+      '<button type="button" class="stay" data-copy="' + EMAIL + '">Copy address</button>' +
+    '</div>';
+  }
+  function show(html) {
+    dlg.innerHTML = '<div class="leave-in">' + html + '<div class="acts" style="margin-top:16px"><button type="button" class="stay" data-close>Close</button></div></div>';
+    dlg.showModal();
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="mailto:"], a[href^="sms:"]') : null;
+    if (!a || a.hasAttribute("data-direct")) return;
+    var href = a.getAttribute("href") || "";
+    if (href.indexOf("mailto:?") === 0 || href.indexOf("sms:?") === 0) return;   /* sharing with a friend, not contacting Garry */
+    e.preventDefault();
+    if (href.indexOf("mailto:") === 0) {
+      show('<h3>Email Garry</h3><p>Pick how you want to send it. Your message is already filled in, and I reply personally, usually the same day.</p>' +
+        emailChoices(param(href, "subject"), param(href, "body")) +
+        '<p style="margin:14px 0 0;font-size:.9rem;color:#5C6A73">Or write to ' + EMAIL + '</p>');
+    } else {
+      var msg = param(href, "body");
+      show('<h3>Text Garry</h3><p>Texting works from your phone. Text me at <b style="white-space:nowrap">' + PHONE + '</b>.</p>' +
+        (msg ? '<p class="warn">Suggested message: ' + escH(msg) + '</p>' : '') +
+        '<div class="acts"><button type="button" class="photos-btn" data-copy="' + PHONE + '">Copy number</button>' +
+        (msg ? '<button type="button" class="stay" data-copy="' + escH(msg) + '">Copy message</button>' : '') + '</div>' +
+        '<p style="margin:18px 0 8px">Or email me from this computer:</p>' + emailChoices(msg ? "Yacht inquiry" : "", msg));
+    }
+  });
+  dlg.addEventListener("click", function (e) {
+    if (e.target === dlg || (e.target.closest && e.target.closest("[data-close]"))) { dlg.close(); return; }
+    var c = e.target.closest ? e.target.closest("[data-copy]") : null;
+    if (c) {
+      var t = c.getAttribute("data-copy");
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { c.textContent = "Copied"; })
+        .catch(function () { window.prompt("Copy this:", t); });
+      return;
+    }
+    if (e.target.closest && e.target.closest("[data-done]")) setTimeout(function () { dlg.close(); }, 150);
+  });
+})();
 </script>
 </body>
 </html>
