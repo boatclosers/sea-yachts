@@ -42,6 +42,7 @@ button.textlink{font:inherit;background:none;border:0;border-bottom:1px solid va
 .rep{margin-top:22px;background:var(--navy);color:var(--paper);padding:22px 24px}.rep p{margin:0 0 14px}.rep b{display:block;font-family:var(--serif);font-weight:400;font-size:1.35rem;margin-bottom:4px}
 .rep .acts{display:flex;flex-wrap:wrap;gap:10px}.rep .acts a{padding:12px 18px;font-weight:500;border:1px solid rgba(251,251,249,.5)}.rep .acts a.primary{background:var(--paper);color:var(--navy);border-color:var(--paper)}.rep .acts a:hover{background:var(--teak);color:var(--paper);border-color:var(--teak)}
   /* "See all photos": blue button, leaving-site notice and welcome-back bar */   .photos-btn { display: inline-flex; align-items: center; gap: 6px; background: #1F5FAD; color: #FFFFFF; border: 0; padding: 10px 16px; font-family: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; text-decoration: none; }   .photos-btn:hover { background: #174A87; color: #FFFFFF; }   dialog.leave { border: 0; padding: 0; width: min(92vw, 520px); max-width: none; color: #0E2235; box-shadow: 0 20px 60px rgba(14,34,53,0.35); }   dialog.leave::backdrop { background: rgba(14,34,53,0.55); }   .leave-in { padding: 30px 30px 26px; }   .leave h3 { font-family: "Newsreader", Georgia, serif; font-weight: 400; font-size: 1.6rem; margin: 0 0 12px; }   .leave p { margin: 0 0 14px; line-height: 1.55; max-width: none; }   .leave .warn { border-left: 3px solid #8A4B2A; padding: 10px 14px; background: #F4F1EC; }   .leave .acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }   .leave .stay { background: none; border: 1px solid #0E2235; padding: 10px 16px; font-family: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; color: #0E2235; }   .back-bar { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 50; max-width: 760px; margin: 0 auto; background: #0E2235; color: #FBFBF9; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; box-shadow: 0 12px 40px rgba(14,34,53,0.35); }   .back-bar[hidden] { display: none; }   .back-bar p { margin: 0; flex: 1 1 240px; font-size: 0.95rem; max-width: none; }   .back-bar a { padding: 9px 14px; border: 1px solid rgba(251,251,249,0.5); font-weight: 500; font-size: 0.92rem; color: #FBFBF9; }   .back-bar a.primary { background: #FBFBF9; color: #0E2235; }   .back-bar button { background: none; border: 0; color: #FBFBF9; font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 4px 6px; } 
+.why-deal{margin:0 0 22px;padding:16px 18px;background:#F4F1EC;border-left:3px solid var(--teak);font-family:var(--serif);font-size:1.3rem;line-height:1.35}.why-deal span{display:block;font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--teak);margin-bottom:4px}
 .about{margin-top:48px;display:flex;gap:18px;align-items:center;border-top:1px solid var(--rule);padding-top:28px}
 .about img{width:72px;height:72px;object-fit:cover;border-radius:50%}.about p{margin:0;color:var(--muted);font-size:.96rem}.about b{color:var(--ink);font-weight:500}
 footer{background:var(--navy);color:rgba(251,251,249,.72);font-size:.88rem;padding:30px 0}
@@ -115,6 +116,7 @@ module.exports = async (req, res) => {
     ${d.photo_url ? `<figure class="photo"><img src="${esc(d.photo_url)}" alt="${esc(t)}"></figure>` : ""}
     ${tag ? `<span class="tag">${esc(tag)}</span>` : ""}
     <h1>${esc(t)}</h1>
+    ${d.verdict ? `<p class="why-deal"><span>Why it's a deal</span>${esc(d.verdict)}</p>` : ""}
     <dl>
       ${d.length_ft ? `<dt>Length</dt><dd>${esc(Number(d.length_ft))} ft</dd>` : ""}
       ${d.location ? `<dt>Location</dt><dd>${esc(d.location)}</dd>` : ""}
@@ -132,7 +134,7 @@ module.exports = async (req, res) => {
 `}
     ${d.checked_at ? `<p class="checked">Price and availability checked ${day(d.checked_at)}.</p>` : ""}
   </div>
-  <div class="take"><small>Captain's take</small><h2>${esc(d.verdict || "")}</h2>${paras}</div>
+  ${paras ? `<div class="take"><small>Captain's take</small><h2>The full story and what I'd check</h2>${paras}</div>` : ""}
 </div>
 <div class="disclaimer">
   <p>This yacht is listed by another brokerage. I'm sharing it because I believe it may represent interesting value based on the information publicly available at the time of posting.</p>

@@ -254,6 +254,8 @@
   .share-menu a, .share-menu button { font: 500 0.9rem var(--sans); padding: 7px 12px; border: 1px solid var(--rule); background: var(--white); color: var(--ink); cursor: pointer; }
   .share-menu a:hover, .share-menu button:hover { border-color: var(--ink); }
   .deal h3 a:hover { color: var(--magenta); }
+  .deal-why { margin: 0 0 18px; padding: 14px 16px; background: #F4F1EC; border-left: 3px solid var(--magenta); font-family: var(--serif); font-size: 1.18rem; line-height: 1.35; max-width: none; }
+  .deal-why span { display: block; font-family: var(--sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--magenta); margin-bottom: 4px; }
   .checked { margin: 14px 0 0; font-size: 0.86rem; color: var(--muted); }
   .deal.flash { animation: flash 2.4s ease-out; }
   @keyframes flash { 0%, 30% { background: rgba(138,75,42,0.10); } 100% { background: transparent; } }
@@ -711,6 +713,7 @@
           '<div>' +
             (d.photo_url ? '<figure class="deal-photo"><img src="' + esc(d.photo_url) + '" alt="' + esc(dealTitle(d)) + '" loading="lazy">' + (tag ? '<span class="tag-over">' + esc(tag) + '</span>' : '') + '</figure>' : (tag ? '<span class="tag">' + esc(tag) + '</span>' : '')) +
             '<h3><a href="' + esc(dealPath(d)) + '">' + esc(dealTitle(d)) + '</a></h3>' +
+            (d.verdict ? '<p class="deal-why"><span>Why it’s a deal</span>' + esc(d.verdict) + '</p>' : '') +
             '<dl>' +
               (d.length_ft ? '<dt>Length</dt><dd>' + esc(Number(d.length_ft)) + ' ft</dd>' : '') +
               (d.location ? '<dt>Location</dt><dd>' + esc(d.location) + '</dd>' : '') +
@@ -729,9 +732,9 @@
             '</div>' +
             (checkedText(d) ? '<p class="checked">' + esc(checkedText(d)) + '</p>' : '') +
           '</div>' +
-          '<div class="take"><small>Captain’s take</small><b>' + esc(d.verdict || "") + '</b>' +
-            (paras ? '<details><summary><span class="closed-label">Why I picked this boat</span><span class="open-label">Show less</span></summary><div class="why">' + paras + '</div></details>' : '') +
-          '</div>' +
+          (paras ? '<div class="take"><small>Captain’s take</small>' +
+            '<details><summary><span class="closed-label">The full story and what I’d check</span><span class="open-label">Show less</span></summary><div class="why">' + paras + '</div></details>' +
+          '</div>' : '') +
           (d.status === "sold" ? '' :
           '<div class="rep"><p><b>Want me on your side for this boat?</b>I’ll represent you as your buyer’s broker, usually at no cost to you.</p>' +
             '<div class="rep-actions">' +
