@@ -39,6 +39,8 @@ button.textlink{font:inherit;background:none;border:0;border-bottom:1px solid va
 .sold{background:var(--navy);color:var(--paper);padding:18px 22px;margin:22px 0 0}.sold a{border-bottom:1px solid var(--paper);font-weight:600}
 .disclaimer{margin-top:48px;border-left:3px solid var(--teak);background:rgba(255,255,255,.6);padding:16px 22px;max-width:860px}
 .disclaimer p{margin:0 0 8px;font-size:.92rem;color:var(--muted)}.disclaimer p:last-child{margin:0;color:var(--ink)}
+.rep{margin-top:22px;background:var(--navy);color:var(--paper);padding:22px 24px}.rep p{margin:0 0 14px}.rep b{display:block;font-family:var(--serif);font-weight:400;font-size:1.35rem;margin-bottom:4px}
+.rep .acts{display:flex;flex-wrap:wrap;gap:10px}.rep .acts a{padding:12px 18px;font-weight:500;border:1px solid rgba(251,251,249,.5)}.rep .acts a.primary{background:var(--paper);color:var(--navy);border-color:var(--paper)}.rep .acts a:hover{background:var(--teak);color:var(--paper);border-color:var(--teak)}
 .about{margin-top:48px;display:flex;gap:18px;align-items:center;border-top:1px solid var(--rule);padding-top:28px}
 .about img{width:72px;height:72px;object-fit:cover;border-radius:50%}.about p{margin:0;color:var(--muted);font-size:.96rem}.about b{color:var(--ink);font-weight:500}
 footer{background:var(--navy);color:rgba(251,251,249,.72);font-size:.88rem;padding:30px 0}
@@ -94,7 +96,10 @@ module.exports = async (req, res) => {
   const paras = String(d.take || "").split(/\n\s*\n/).filter((x) => x.trim()).map((x) => `<p>${esc(x)}</p>`).join("");
   const askHref = `/?topic=deal&deal=${encodeURIComponent(t)}#consult`;
 
-  const head = `<title>${esc(t)}${sold ? " (Sold)" : ""} | Captain's take | Sea Yachts</title>
+  const mailHref = `mailto:Garry@SeaYachts.net?subject=${encodeURIComponent(`${t} - please represent me`)}&body=${encodeURIComponent(`Hi Garry,\n\nI'm interested in the ${t} on your site (${canonical}). Can you represent me?\n\n`)}`;
+  const smsHref = `sms:+17864069904?&body=${encodeURIComponent(`Hi Garry, I'm interested in the ${t} on your site. Can you represent me?`)}`;
+
+  const head = `<title>${esc(t)}${sold ? " (Sold)" : " for sale"} | Captain's take | Sea Yachts</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${esc(canonical)}">
 <meta property="og:type" content="article"><meta property="og:site_name" content="Sea Yachts">
@@ -121,6 +126,8 @@ module.exports = async (req, res) => {
       ${d.link ? `<a class="textlink" href="${esc(d.link)}" target="_blank" rel="noopener" id="outbound">See all photos &#8599;</a>` : ""}
       <button type="button" class="textlink" id="share">Share</button>
     </div>
+    <div class="rep"><p><b>Want me on your side for this boat?</b>The listing broker works for the seller. I'll represent you as your buyer's broker, check her like a captain, run the survey and sea trial, and negotiate the price, usually at no cost to you.</p>
+      <div class="acts"><a class="primary" href="${esc(mailHref)}">Email Garry</a><a href="${esc(smsHref)}">Text me</a></div></div>
     <p class="note" id="stay" hidden>Opened in a new tab. Before you contact the listing broker, remember they represent the seller. I can represent you on this boat, usually at no cost to you. <a href="${esc(askHref)}">Ask me first</a>.</p>`}
     ${d.checked_at ? `<p class="checked">Price and availability checked ${day(d.checked_at)}.</p>` : ""}
   </div>
