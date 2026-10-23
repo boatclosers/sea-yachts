@@ -14,81 +14,6 @@ const slug = (d) => {
 const money = (n) => "$" + Number(n).toLocaleString("en-US");
 const day = (t) => new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 
-/* Line drawings of each boat type, used when a deal has no photo of its own. */
-function boatKind(d) {
-  var s = ((d.builder || "") + " " + (d.model || "")).toLowerCase();
-  if (/leopard|lagoon|aquila|fountaine|catamaran|powercat|\bcat\b/.test(s)) return "cat";
-  if (/krogen|nordhavn|selene|grand banks|fleming|trawler|defever|mainship/.test(s)) return "trawler";
-  if (/contender|regulator|yellowfin|seavee|sea vee|freeman|invincible|everglades|grady|whaler|center console|\bst\b|\bcc\b/.test(s)) return "console";
-  if (/viking|bertram|hatteras.*(convertible|gt|\d+c\b)|cabo.*(flybridge|fb)|convertible|sport ?fish|jarrett|ocean yachts|spencer|merritt/.test(s)) return "sportfish";
-  if (/sabre|back cove|hinckley|tiara|cabo|express|picnic|downeast|eastbay|pursuit|sundancer|coupe/.test(s)) return "express";
-  return "motoryacht";
-}
-function boatArt(d) {
-  var k = boatKind(d);
-  var N = "#0E2235", T = "#8A4B2A", W = "#FFFFFF", G = "#C9D6D6";
-  var st = 'fill="none" stroke="' + N + '" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"';
-  var hullFill = 'fill="' + W + '" stroke="' + N + '" stroke-width="2.4" stroke-linejoin="round"';
-  var glass = 'fill="' + N + '" opacity="0.85"';
-  var parts = {
-    sportfish:
-      '<path d="M178 96 L206 28 M292 96 L258 28 M196 28 H268" ' + st + '/>' +
-      '<path d="M232 96 L110 24 M250 96 L370 24" fill="none" stroke="' + N + '" stroke-width="1.4"/>' +
-      '<path d="M150 112 V98 H300 L314 112 Z" ' + hullFill + '/>' +
-      '<path d="M110 136 V114 H318 Q350 118 372 132 Z" ' + hullFill + '/>' +
-      '<path d="M130 124 H310 L318 130 H130 Z" ' + glass + '/>' +
-      '<path d="M46 136 H372 Q420 130 456 118 Q446 160 410 184 H72 Q54 166 46 136 Z" ' + hullFill + '/>' +
-      '<path d="M66 172 H418" stroke="' + T + '" stroke-width="5"/>',
-    motoryacht:
-      '<path d="M170 76 H300 L322 92 H160 Z" ' + hullFill + '/>' +
-      '<path d="M130 112 V92 H330 Q356 98 372 112 Z" ' + hullFill + '/>' +
-      '<path d="M150 100 H332 L346 106 H150 Z" ' + glass + '/>' +
-      '<path d="M96 138 V112 H380 Q404 120 420 136 Z" ' + hullFill + '/>' +
-      '<path d="M116 122 H382 L396 128 H116 Z" ' + glass + '/>' +
-      '<path d="M40 138 H420 Q440 132 462 120 Q452 162 414 186 H66 Q48 168 40 138 Z" ' + hullFill + '/>' +
-      '<path d="M120 154 h22 M160 154 h22 M200 154 h22" stroke="' + N + '" stroke-width="5" stroke-linecap="round"/>' +
-      '<path d="M60 176 H422" stroke="' + T + '" stroke-width="5"/>' +
-      '<path d="M240 76 V58 M232 62 H252" ' + st + '/>',
-    trawler:
-      '<path d="M238 92 V40 M238 52 L196 92 M238 52 L280 92" ' + st + '/>' +
-      '<path d="M170 106 V92 H300 V106 Z" ' + hullFill + '/>' +
-      '<path d="M120 132 V106 H330 L348 132 Z" ' + hullFill + '/>' +
-      '<path d="M138 114 h30 v10 h-30 z M182 114 h30 v10 h-30 z M226 114 h30 v10 h-30 z M270 114 h40 l6 10 h-46 z" ' + glass + '/>' +
-      '<path d="M56 134 H346 Q400 126 444 104 Q438 156 404 188 H84 Q62 170 56 134 Z" ' + hullFill + '/>' +
-      '<path d="M76 176 H414" stroke="' + T + '" stroke-width="5"/>' +
-      '<path d="M100 150 h300" stroke="' + N + '" stroke-width="1.4"/>',
-    express:
-      '<path d="M178 112 L196 84 H300 L318 96 Z" ' + hullFill + '/>' +
-      '<path d="M196 88 H296 L306 96 H190 Z" ' + glass + '/>' +
-      '<path d="M120 138 V112 H330 Q356 118 374 136 Z" ' + hullFill + '/>' +
-      '<path d="M142 120 H322 L332 126 H142 Z" ' + glass + '/>' +
-      '<path d="M50 138 H374 Q414 132 450 122 Q440 162 404 184 H74 Q56 166 50 138 Z" ' + hullFill + '/>' +
-      '<path d="M70 172 H412" stroke="' + T + '" stroke-width="5"/>',
-    console:
-      '<path d="M176 84 H292 M196 84 L200 132 M276 84 L270 132" ' + st + '/>' +
-      '<path d="M170 80 H298 L292 88 H176 Z" ' + hullFill + '/>' +
-      '<path d="M206 132 V112 H262 L272 132 Z" ' + hullFill + '/>' +
-      '<path d="M214 114 H258 L264 124 H214 Z" ' + glass + '/>' +
-      '<path d="M84 140 H360 Q404 134 446 124 Q436 160 400 182 H100 Q88 166 84 140 Z" ' + hullFill + '/>' +
-      '<path d="M54 120 h30 v52 h-18 l-12 -18 z M40 126 h30 v52 h-18 l-12 -18 z" ' + hullFill + '/>' +
-      '<path d="M100 170 H410" stroke="' + T + '" stroke-width="5"/>',
-    cat:
-      '<path d="M150 96 H320 L334 106 H140 Z" ' + hullFill + '/>' +
-      '<path d="M112 132 V106 H346 Q368 112 384 130 Z" ' + hullFill + '/>' +
-      '<path d="M132 114 H340 L352 122 H132 Z" ' + glass + '/>' +
-      '<path d="M60 132 H420 V148 H60 Z" ' + hullFill + '/>' +
-      '<path d="M60 148 H440 Q436 168 418 182 H76 Q64 168 60 148 Z" ' + hullFill + '/>' +
-      '<path d="M80 172 H420" stroke="' + T + '" stroke-width="5"/>'
-  };
-  return '<svg viewBox="0 0 480 270" role="img" aria-label="Drawing of a ' + ({ sportfish: "sportfish", motoryacht: "motor yacht", trawler: "trawler", express: "express cruiser", console: "center console", cat: "catamaran" })[k] + '" preserveAspectRatio="xMidYMid meet">' +
-    '<rect width="480" height="270" fill="#E9EFEE"/>' +
-    '<path d="M0 196 H480 V270 H0 Z" fill="' + G + '"/>' +
-    '<path d="M0 196 H480" stroke="' + N + '" stroke-width="1.4"/>' +
-    '<path d="M30 214 h60 M130 222 h80 M260 212 h70 M370 226 h70 M60 240 h50 M300 244 h60" stroke="' + N + '" stroke-width="1.2" opacity="0.35"/>' +
-    '<g transform="translate(0 16)">' + parts[k] + '</g>' +
-  '</svg>';
-}
-
 const CSS = `
 :root{--navy:#0E2235;--paper:#FBFBF9;--white:#fff;--glass:#E9EFEE;--ink:#0E2235;--muted:#5C6A73;--rule:rgba(14,34,53,.16);--teak:#8A4B2A;
 --serif:"Newsreader",Georgia,serif;--sans:"Albert Sans","Helvetica Neue",Arial,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -116,8 +41,7 @@ button.textlink{font:inherit;background:none;border:0;border-bottom:1px solid va
 .disclaimer p{margin:0 0 8px;font-size:.92rem;color:var(--muted)}.disclaimer p:last-child{margin:0;color:var(--ink)}
 .rep{margin-top:22px;background:var(--navy);color:var(--paper);padding:22px 24px}.rep p{margin:0 0 14px}.rep b{display:block;font-family:var(--serif);font-weight:400;font-size:1.35rem;margin-bottom:4px}
 .rep .acts{display:flex;flex-wrap:wrap;gap:10px}.rep .acts a{padding:12px 18px;font-weight:500;border:1px solid rgba(251,251,249,.5)}.rep .acts a.primary{background:var(--paper);color:var(--navy);border-color:var(--paper)}.rep .acts a:hover{background:var(--teak);color:var(--paper);border-color:var(--teak)}
-  /* "See all photos": blue button, leaving-site notice and welcome-back bar */   .photos-btn { display: inline-flex; align-items: center; gap: 6px; background: #1F5FAD; color: #FFFFFF; border: 0; padding: 10px 16px; font-family: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; text-decoration: none; }   .photos-btn:hover { background: #174A87; color: #FFFFFF; }   .deal-art { position: relative; margin: 0; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid rgba(14,34,53,0.16); background: #E9EFEE; }   .deal-art svg { width: 100%; height: 100%; display: block; }   .deal-art .art-note { position: absolute; left: 10px; bottom: 10px; font-size: 0.75rem; color: #0E2235; background: rgba(255,255,255,0.85); padding: 3px 8px; }   .deal-art .art-photos { position: absolute; right: 10px; bottom: 10px; padding: 7px 12px; font-size: 0.85rem; }   .deal-art .tag-over { position: absolute; top: 12px; left: 12px; background: #FFFFFF; color: #8A4B2A; font-size: 0.8rem; font-weight: 600; padding: 4px 10px; }   dialog.leave { border: 0; padding: 0; width: min(92vw, 520px); max-width: none; color: #0E2235; box-shadow: 0 20px 60px rgba(14,34,53,0.35); }   dialog.leave::backdrop { background: rgba(14,34,53,0.55); }   .leave-in { padding: 30px 30px 26px; }   .leave h3 { font-family: "Newsreader", Georgia, serif; font-weight: 400; font-size: 1.6rem; margin: 0 0 12px; }   .leave p { margin: 0 0 14px; line-height: 1.55; max-width: none; }   .leave .warn { border-left: 3px solid #8A4B2A; padding: 10px 14px; background: #F4F1EC; }   .leave .acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }   .leave .stay { background: none; border: 1px solid #0E2235; padding: 10px 16px; font-family: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; color: #0E2235; }   .back-bar { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 50; max-width: 760px; margin: 0 auto; background: #0E2235; color: #FBFBF9; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; box-shadow: 0 12px 40px rgba(14,34,53,0.35); }   .back-bar[hidden] { display: none; }   .back-bar p { margin: 0; flex: 1 1 240px; font-size: 0.95rem; max-width: none; }   .back-bar a { padding: 9px 14px; border: 1px solid rgba(251,251,249,0.5); font-weight: 500; font-size: 0.92rem; color: #FBFBF9; }   .back-bar a.primary { background: #FBFBF9; color: #0E2235; }   .back-bar button { background: none; border: 0; color: #FBFBF9; font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 4px 6px; } 
-.deal-art{margin:0 0 22px}
+  /* "See all photos": blue button, leaving-site notice and welcome-back bar */   .photos-btn { display: inline-flex; align-items: center; gap: 6px; background: #1F5FAD; color: #FFFFFF; border: 0; padding: 10px 16px; font-family: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; text-decoration: none; }   .photos-btn:hover { background: #174A87; color: #FFFFFF; }   dialog.leave { border: 0; padding: 0; width: min(92vw, 520px); max-width: none; color: #0E2235; box-shadow: 0 20px 60px rgba(14,34,53,0.35); }   dialog.leave::backdrop { background: rgba(14,34,53,0.55); }   .leave-in { padding: 30px 30px 26px; }   .leave h3 { font-family: "Newsreader", Georgia, serif; font-weight: 400; font-size: 1.6rem; margin: 0 0 12px; }   .leave p { margin: 0 0 14px; line-height: 1.55; max-width: none; }   .leave .warn { border-left: 3px solid #8A4B2A; padding: 10px 14px; background: #F4F1EC; }   .leave .acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }   .leave .stay { background: none; border: 1px solid #0E2235; padding: 10px 16px; font-family: inherit; font-size: 0.95rem; font-weight: 500; cursor: pointer; color: #0E2235; }   .back-bar { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 50; max-width: 760px; margin: 0 auto; background: #0E2235; color: #FBFBF9; padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; box-shadow: 0 12px 40px rgba(14,34,53,0.35); }   .back-bar[hidden] { display: none; }   .back-bar p { margin: 0; flex: 1 1 240px; font-size: 0.95rem; max-width: none; }   .back-bar a { padding: 9px 14px; border: 1px solid rgba(251,251,249,0.5); font-weight: 500; font-size: 0.92rem; color: #FBFBF9; }   .back-bar a.primary { background: #FBFBF9; color: #0E2235; }   .back-bar button { background: none; border: 0; color: #FBFBF9; font-size: 1.5rem; line-height: 1; cursor: pointer; padding: 4px 6px; } 
 .about{margin-top:48px;display:flex;gap:18px;align-items:center;border-top:1px solid var(--rule);padding-top:28px}
 .about img{width:72px;height:72px;object-fit:cover;border-radius:50%}.about p{margin:0;color:var(--muted);font-size:.96rem}.about b{color:var(--ink);font-weight:500}
 footer{background:var(--navy);color:rgba(251,251,249,.72);font-size:.88rem;padding:30px 0}
@@ -188,7 +112,7 @@ module.exports = async (req, res) => {
 <p class="crumb"><a href="/#deals">Good-value deals</a> / ${esc(t)}</p>
 <div class="grid">
   <div>
-    ${d.photo_url ? `<figure class="photo"><img src="${esc(d.photo_url)}" alt="${esc(t)}"></figure>` : `<figure class="deal-art">${boatArt(d)}<span class="art-note">Drawing</span>${d.link && !sold ? `<button type="button" class="photos-btn art-photos" data-photos="${esc(d.link)}" data-boat="${esc(t)}" data-page="${esc(canonical)}">See real photos</button>` : ""}</figure>`}
+    ${d.photo_url ? `<figure class="photo"><img src="${esc(d.photo_url)}" alt="${esc(t)}"></figure>` : ""}
     ${tag ? `<span class="tag">${esc(tag)}</span>` : ""}
     <h1>${esc(t)}</h1>
     <dl>
