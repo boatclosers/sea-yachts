@@ -6,7 +6,7 @@ export default function middleware(request) {
   const host = (request.headers.get("host") || "").replace(/^www\./, "");
   if (host === "garrychupurdyjr.com") {
     return new Response(null, {
-      headers: { "x-middleware-rewrite": new URL("/personal/index.html", request.url).toString() },
+      headers: { "x-middleware-rewrite": new URL("/personal", request.url).toString() },
     });
   }
 }
