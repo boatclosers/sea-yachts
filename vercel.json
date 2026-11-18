@@ -2,26 +2,6 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "garrychupurdyjr.com"
-        }
-      ],
-      "destination": "/personal/index.html"
-    },
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.garrychupurdyjr.com"
-        }
-      ],
-      "destination": "/personal/index.html"
-    },
-    {
       "source": "/deals/:slug",
       "destination": "/api/deal?slug=:slug"
     },
