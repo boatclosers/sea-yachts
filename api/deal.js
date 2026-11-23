@@ -55,8 +55,9 @@ function page({ head, body, status }) {
 ${head}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Albert+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="/phone.js"></script>
 <style>${CSS}</style></head><body>
-<header><div class="wrap"><a class="wordmark" href="/" style="display:inline-flex;align-items:center;gap:10px"><svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true" style="flex:none"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M20 3 L23 20 L20 37 L17 20 Z" fill="currentColor"/><path d="M3 20 L20 17.5 L37 20 L20 22.5 Z" fill="currentColor" opacity=".45"/><circle cx="20" cy="20" r="2" fill="#8A4B2A"/></svg>Sea Yachts</a><a class="call" href="tel:+17864069904">(786) 406-9904</a></div></header>
+<header><div class="wrap"><a class="wordmark" href="/" style="display:inline-flex;align-items:center;gap:10px"><svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true" style="flex:none"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M20 3 L23 20 L20 37 L17 20 Z" fill="currentColor"/><path d="M3 20 L20 17.5 L37 20 L20 22.5 Z" fill="currentColor" opacity=".45"/><circle cx="20" cy="20" r="2" fill="#8A4B2A"/></svg>Sea Yachts</a><a class="call" href="#" data-phone="call">Show phone</a></div></header>
 ${body}
 <footer><div class="wrap">&copy; ${new Date().getFullYear()} Sea Yachts LLC. Licensed and bonded Florida yacht brokerage. Garry Chupurdy Jr., Yacht Broker, License EBK 7119.</div></footer>
 </body></html>`;
@@ -99,7 +100,7 @@ module.exports = async (req, res) => {
   const askHref = `/?topic=deal&deal=${encodeURIComponent(t)}#consult`;
 
   const mailHref = `mailto:Garry@SeaYachts.net?subject=${encodeURIComponent(`${t} - please represent me`)}&body=${encodeURIComponent(`Hi Garry,\n\nI'm interested in the ${t} on your site (${canonical}). Can you represent me?\n\n`)}`;
-  const smsHref = `sms:+17864069904?&body=${encodeURIComponent(`Hi Garry, I'm interested in the ${t} on your site. Can you represent me?`)}`;
+  const smsBody = `Hi Garry, I'm interested in the ${t} on your site. Can you represent me?`;
 
   const head = `<title>${esc(t)}${sold ? " (Sold)" : " for sale"} | Captain's take | Sea Yachts</title>
 <meta name="description" content="${esc(desc)}">
@@ -130,7 +131,7 @@ module.exports = async (req, res) => {
       <button type="button" class="textlink" id="share">Share</button>
     </div>
     <div class="rep"><p><b>Want me on your side for this boat?</b>The listing broker works for the seller. I'll represent you as your buyer's broker, check her like a captain, run the survey and sea trial, and negotiate the price, usually at no cost to you.</p>
-      <div class="acts"><a class="primary" href="${esc(mailHref)}">Email Garry</a><a href="${esc(smsHref)}">Text me</a></div></div>
+      <div class="acts"><a class="primary" href="${esc(mailHref)}">Email Garry</a><a href="#" data-phone="sms" data-body="${esc(smsBody)}">Text me</a></div></div>
 `}
     ${d.checked_at ? `<p class="checked">Price and availability checked ${day(d.checked_at)}.</p>` : ""}
   </div>
@@ -149,7 +150,7 @@ module.exports = async (req, res) => {
   <p class="warn">Remember, the listing broker works for the seller. Before you contact them, let me represent you, usually at no cost to you.</p>
   <div class="acts"><a class="photos-btn" id="leave-go" href="#" target="_blank" rel="noopener">Continue to photos &#8599;</a><button type="button" class="stay" id="leave-stay">Stay on Sea Yachts</button></div>
 </div></dialog>
-<div class="back-bar" id="back-bar" role="status" hidden><p>Welcome back. Want me on your side for the <b id="back-boat"></b>?</p><a class="primary" id="back-email" href="#">Email Garry</a><a id="back-text" href="#">Text me</a><button type="button" id="back-close" aria-label="Close">&times;</button></div>
+<div class="back-bar" id="back-bar" role="status" hidden><p>Welcome back. Want me on your side for the <b id="back-boat"></b>?</p><a class="primary" id="back-email" href="#">Email Garry</a><a id="back-text" href="#" data-phone="sms">Text me</a><button type="button" id="back-close" aria-label="Close">&times;</button></div>
 <script>
 /* "See all photos": warn before leaving for the listing broker's site, then welcome them back */
 (function () {
@@ -174,7 +175,7 @@ module.exports = async (req, res) => {
     document.getElementById("back-boat").textContent = boat;
     document.getElementById("back-email").href = "mailto:Garry@SeaYachts.net?subject=" + encodeURIComponent(boat + " - please represent me") +
       "&body=" + encodeURIComponent("Hi Garry,\\n\\nI'm interested in the " + boat + " (" + page + "). Can you represent me?\\n\\n");
-    document.getElementById("back-text").href = "sms:+17864069904?&body=" + encodeURIComponent("Hi Garry, I'm interested in the " + boat + " on your site. Can you represent me?");
+    document.getElementById("back-text").setAttribute("data-body", "Hi Garry, I'm interested in the " + boat + " on your site. Can you represent me?");
     bar.hidden = false;
   }
   document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible") welcomeBack(); });
@@ -194,7 +195,7 @@ module.exports = async (req, res) => {
    so instead of a dead click, offer Gmail, Outlook, the mail app, or copying the address/number. */
 (function () {
   if (!window.matchMedia || window.matchMedia("(pointer: coarse)").matches) return;   /* phones and tablets: links work as-is */
-  var EMAIL = "Garry@SeaYachts.net", PHONE = "(786) 406-9904", PHONE_RAW = "+17864069904";
+  var EMAIL = "Garry@SeaYachts.net", PHONE = (window.SY_PHONE || {}).nice || "";
   var dlg = document.createElement("dialog");
   if (!dlg.showModal) return;
   dlg.className = "leave"; dlg.id = "reach"; dlg.setAttribute("aria-label", "Contact Garry");

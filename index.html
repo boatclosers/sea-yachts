@@ -22,7 +22,6 @@
    "legalName": "Sea Yachts LLC",
    "description": "Yacht buyer's broker in Palm Beach, Florida. Buyer representation, yacht sales and exports for private clients worldwide, led by a licensed captain and yacht broker.",
    "url": "https://seayachts.net/",
-   "telephone": "+1-786-406-9904",
    "email": "Garry@SeaYachts.net",
    "image": "https://seayachts.net/images/inlet-chart.jpg",
    "foundingDate": "2010",
@@ -94,7 +93,6 @@
     "@id": "https://seayachts.net/#business"
    },
    "image": "https://seayachts.net/images/garry.jpg",
-   "telephone": "+1-786-406-9904",
    "email": "Garry@SeaYachts.net"
   }
  ]
@@ -422,6 +420,7 @@
     .take { padding: 22px 22px; }
   }
 </style>
+<script src="/phone.js"></script>
 </head>
 <body>
 
@@ -434,7 +433,7 @@
       <li><a href="/articles">Articles</a></li>
       <li><a href="/exports">Exports</a></li>
       <li><a href="#deals">Good-value deals</a></li>
-      <li><a class="call" href="tel:+17864069904">(786) 406-9904</a></li>
+      <li><a class="call" href="#" data-phone="call">Show phone</a></li>
     </ul>
   </div>
 </header>
@@ -505,7 +504,7 @@
       </div>
       <div class="deals-cta">
         <a class="btn btn-navy" href="mailto:Garry@SeaYachts.net?subject=Yacht%20buyer%20representation">Email Garry</a>
-        <a class="btn btn-light" style="border-color:var(--navy)" href="sms:+17864069904?&body=Hi%20Garry%2C%20I%27m%20looking%20for%20a%20yacht%20and%20would%20like%20you%20to%20represent%20me.">Text Garry</a>
+        <a class="btn btn-light" style="border-color:var(--navy)" href="#" data-phone="sms" data-body="Hi Garry, I&#39;m looking for a yacht and would like you to represent me.">Text Garry</a>
         <p>The listing broker works for the seller. I work for you: I check the boat like a captain, steer the survey and sea trial, and negotiate the price, usually at no cost to you.</p>
       </div>
       <div class="deals-disclaimer">
@@ -603,7 +602,7 @@
         <h2>Book a consultation</h2>
         <p class="lead muted" style="margin-top:22px">Tell me what you're looking for or what you're selling. I'll reply personally within one business day.</p>
         <div class="direct">
-          <a href="tel:+17864069904">(786) 406-9904</a>
+          <a href="#" data-phone="call">Show phone</a>
           <a href="mailto:Garry@SeaYachts.net">Garry@SeaYachts.net</a>
           <span>Palm Beach County, Florida. By appointment.</span>
         </div>
@@ -687,7 +686,7 @@
       </form>
       <div class="form-done" id="f-done" hidden>
         <h3>Thank you. I have your message.</h3>
-        <p class="muted">I'll reply personally within one business day. If it's urgent, call or text me at <a href="tel:+17864069904">(786) 406-9904</a>.</p>
+        <p class="muted">I'll reply personally within one business day. If it's urgent, call or text me at <a href="#" data-phone="call">Show phone</a>.</p>
       </div>
     </div>
   </section>
@@ -699,7 +698,7 @@
   <p class="warn">Remember, the listing broker works for the seller. Before you contact them, let me represent you, usually at no cost to you.</p>
   <div class="acts"><a class="photos-btn" id="leave-go" href="#" target="_blank" rel="noopener">Continue to photos &#8599;</a><button type="button" class="stay" id="leave-stay">Stay on Sea Yachts</button></div>
 </div></dialog>
-<div class="back-bar" id="back-bar" role="status" hidden><p>Welcome back. Want me on your side for the <b id="back-boat"></b>?</p><a class="primary" id="back-email" href="#">Email Garry</a><a id="back-text" href="#">Text me</a><button type="button" id="back-close" aria-label="Close">&times;</button></div>
+<div class="back-bar" id="back-bar" role="status" hidden><p>Welcome back. Want me on your side for the <b id="back-boat"></b>?</p><a class="primary" id="back-email" href="#">Email Garry</a><a id="back-text" href="#" data-phone="sms">Text me</a><button type="button" id="back-close" aria-label="Close">&times;</button></div>
 
 <footer>
   <div class="inlay" role="presentation"></div>
@@ -783,7 +782,7 @@
         '<div class="rep"><p><b>Want me on your side for this boat?</b>I’ll represent you as your buyer’s broker, usually at no cost to you.</p>' +
           '<div class="rep-actions">' +
             '<a class="primary" href="mailto:Garry@SeaYachts.net?subject=' + encodeURIComponent(dealTitle(d) + " — please represent me") + '&body=' + encodeURIComponent("Hi Garry,\n\nI'm interested in the " + dealTitle(d) + " on your site (" + dealUrl(d) + "). Can you represent me?\n\n") + '">Email Garry</a>' +
-            '<a href="sms:+17864069904?&body=' + encodeURIComponent("Hi Garry, I'm interested in the " + dealTitle(d) + " on your site. Can you represent me?") + '">Text me</a>' +
+            '<a href="#" data-phone="sms" data-body="' + esc("Hi Garry, I'm interested in the " + dealTitle(d) + " on your site. Can you represent me?") + '">Text me</a>' +
             '<a href="#consult" data-topic="deal" data-deal="' + esc(dealTitle(d)) + '">Ask online</a>' +
           '</div></div>') +
       '</div>' +
@@ -905,7 +904,7 @@
       document.getElementById("f-done").hidden = false;
     }).catch(function () {
       btn.disabled = false; btn.textContent = label;
-      statusEl.innerHTML = 'Sorry, that didn’t send. Please call or text <a href="tel:+17864069904">(786) 406-9904</a>, or email <a href="mailto:Garry@SeaYachts.net">Garry@SeaYachts.net</a>.';
+      statusEl.innerHTML = 'Sorry, that didn’t send. Please call or text <a href="#" data-phone="call">Show phone</a>, or email <a href="mailto:Garry@SeaYachts.net">Garry@SeaYachts.net</a>.';
     });
   });
 
@@ -976,7 +975,7 @@
     document.getElementById("back-boat").textContent = boat;
     document.getElementById("back-email").href = "mailto:Garry@SeaYachts.net?subject=" + encodeURIComponent(boat + " - please represent me") +
       "&body=" + encodeURIComponent("Hi Garry,\n\nI'm interested in the " + boat + " (" + page + "). Can you represent me?\n\n");
-    document.getElementById("back-text").href = "sms:+17864069904?&body=" + encodeURIComponent("Hi Garry, I'm interested in the " + boat + " on your site. Can you represent me?");
+    document.getElementById("back-text").setAttribute("data-body", "Hi Garry, I'm interested in the " + boat + " on your site. Can you represent me?");
     bar.hidden = false;
   }
   document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible") welcomeBack(); });
@@ -987,7 +986,7 @@
    so instead of a dead click, offer Gmail, Outlook, the mail app, or copying the address/number. */
 (function () {
   if (!window.matchMedia || window.matchMedia("(pointer: coarse)").matches) return;   /* phones and tablets: links work as-is */
-  var EMAIL = "Garry@SeaYachts.net", PHONE = "(786) 406-9904", PHONE_RAW = "+17864069904";
+  var EMAIL = "Garry@SeaYachts.net", PHONE = (window.SY_PHONE || {}).nice || "";
   var dlg = document.createElement("dialog");
   if (!dlg.showModal) return;
   dlg.className = "leave"; dlg.id = "reach"; dlg.setAttribute("aria-label", "Contact Garry");
