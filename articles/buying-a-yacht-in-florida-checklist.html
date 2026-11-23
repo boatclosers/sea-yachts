@@ -53,11 +53,12 @@ footer{background:var(--navy);color:rgba(251,251,249,.72);font-size:.88rem;paddi
 .byline{display:flex;gap:14px;align-items:center;margin-top:26px;color:var(--muted);font-size:.95rem}.byline img{width:52px;height:52px;border-radius:50%;object-fit:cover}.byline a{border-bottom:1px solid var(--teak)}
 article .wrap{max-width:760px}article h2{font-size:clamp(1.5rem,2.8vw,2rem);margin:44px 0 14px}article p,article li{max-width:none}article ol,article ul{padding-left:1.2em}article li{margin-bottom:.5em}.note{background:var(--glass);padding:16px 20px;font-size:.95rem;color:var(--muted)}.alist{border-top:1px solid var(--ink)}.alist a{display:block;padding:22px 0;border-bottom:1px solid var(--rule)}.alist h3{font-size:1.35rem;margin:0 0 4px}.alist p{margin:0;color:var(--muted)}.alist a:hover h3{color:var(--teak)}
 </style>
+<script src="/phone.js"></script>
 </head>
 <body>
 <header><div class="wrap">
   <a class="brand" href="/" aria-label="Sea Yachts home"><svg class="mark" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" stroke-width=".8"/><path d="M20 3 L23 20 L20 37 L17 20 Z" fill="currentColor"/><path d="M3 20 L20 17.5 L37 20 L20 22.5 Z" fill="currentColor" opacity=".45"/><circle cx="20" cy="20" r="2" fill="#8A4B2A"/></svg><span><b>Sea Yachts</b><small>Yacht brokerage, Palm Beach</small></span></a>
-  <nav><a href="/buyer-representation">Buying</a><a href="/selling">Selling</a><a href="/exports">Exports</a><a href="/#deals">Deals</a><a href="/articles">Articles</a><a class="call" href="tel:+17864069904">(786) 406-9904</a></nav>
+  <nav><a href="/buyer-representation">Buying</a><a href="/selling">Selling</a><a href="/exports">Exports</a><a href="/#deals">Deals</a><a href="/articles">Articles</a><a class="call" href="#" data-phone="call">Show phone</a></nav>
 </div></header>
 <main><article>
 <div class="hero"><div class="wrap">
@@ -86,14 +87,14 @@ article .wrap{max-width:760px}article h2{font-size:clamp(1.5rem,2.8vw,2rem);marg
 <li>Have insurance in place before you leave the dock.</li>
 <li>Line up dockage, a captain if you need one, and a maintenance plan.</li>
 </ul>
-<p class="note">Buying a yacht is a legal transaction as much as a purchase. If you would like a licensed broker on your side, call me at (786) 406-9904.</p>
+<p class="note">Buying a yacht is a legal transaction as much as a purchase. If you would like a licensed broker on your side, call me at <a class="textlink" href="#" data-phone="call">show phone number</a>.</p>
 
 <p style="margin-top:40px"><a class="textlink" href="/articles">More articles from Sea Yachts</a></p>
 </div></section>
 </article>
 <section class="cta"><div class="wrap two">
   <div><h2 style="color:var(--paper)">Questions about your deal?</h2><p>Call or text me. You&rsquo;ll speak with me directly, and I reply to every inquiry within one business day.</p></div>
-  <div><div class="actions" style="margin-top:0"><a class="btn" href="/#consult">Talk to Garry</a><a class="tel" href="tel:+17864069904">(786) 406-9904</a></div></div>
+  <div><div class="actions" style="margin-top:0"><a class="btn" href="/#consult">Talk to Garry</a><a class="tel" href="#" data-phone="call">Show phone</a></div></div>
 </div></section>
 </main>
 <footer><div class="wrap">&copy; <span id="y"></span> Sea Yachts LLC. Licensed and bonded Florida yacht brokerage. <a href="/garry-chupurdy-jr">Garry Chupurdy Jr.</a>, Yacht Broker, License EBK 7119.</div></footer>
